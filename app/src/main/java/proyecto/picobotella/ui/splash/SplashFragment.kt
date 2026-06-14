@@ -1,18 +1,20 @@
 package proyecto.picobotella.ui.splash
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import proyecto.picobotella.R
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
+import proyecto.picobotella.R
 
 class SplashFragment : Fragment() {
+
+    private val viewModel: SplashViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,9 +28,7 @@ class SplashFragment : Fragment() {
             false
         )
 
-        val bottle = view.findViewById<ImageView>(
-            R.id.imgBottle
-        )
+        val bottle = view.findViewById<ImageView>(R.id.imgBottle)
 
         val animation = AnimationUtils.loadAnimation(
             requireContext(),
@@ -37,20 +37,17 @@ class SplashFragment : Fragment() {
 
         bottle.startAnimation(animation)
 
-        Handler(Looper.getMainLooper()).postDelayed({
-
-            findNavController().navigate(
-                R.id.homeFragment,
-                null,
-                androidx.navigation.NavOptions.Builder()
-                    .setPopUpTo(
-                        R.id.splashFragment,
-                        true
-                    )
-                    .build()
-            )
-
-        }, 5000)
+        viewModel.navigateToHome.observe(viewLifecycleOwner) { shouldNavigate ->
+            if (shouldNavigate) {
+                findNavController().navigate(
+                    R.id.homeFragment,
+                    null,
+                    NavOptions.Builder()
+                        .setPopUpTo(R.id.splashFragment, true)
+                        .build()
+                )
+            }
+        }
 
         return view
     }
