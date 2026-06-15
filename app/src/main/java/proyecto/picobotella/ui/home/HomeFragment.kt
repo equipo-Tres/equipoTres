@@ -85,6 +85,7 @@ class HomeFragment : Fragment() {
         viewModel.navigateToInstructions.observe(viewLifecycleOwner) { shouldNavigate ->
             if (shouldNavigate) {
                 findNavController().navigate(R.id.action_home_to_instructions)
+                viewModel.onInstructionsNavigated()
             }
         }
 
