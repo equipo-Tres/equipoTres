@@ -19,6 +19,10 @@ class HomeViewModel(
     private val _openPlayStore = MutableLiveData<Intent>()
     val openPlayStore: LiveData<Intent> = _openPlayStore
 
+    //criterio 4 hu3
+    private val _navigateToInstructions = MutableLiveData<Boolean>()
+    val navigateToInstructions: LiveData<Boolean> = _navigateToInstructions
+
     fun onHomeVisible() {
         audioRepository.startBackgroundMusic()
         _isMusicEnabled.value = audioRepository.isMusicEnabled() //sirve para que al volver al home vuelva a quedar el icono encendido
@@ -32,6 +36,11 @@ class HomeViewModel(
     fun onAudioClicked(){
         val enabled = audioRepository.toggleBackgroundMusic()
         _isMusicEnabled.value = enabled
+    }
+
+    //criterio 4 hu3 nav inst
+    fun onInfoClicked() {
+        _navigateToInstructions.value = true
     }
 
     fun onStarClicked() {

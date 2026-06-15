@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import proyecto.picobotella.PicoBotellaApplication
 import proyecto.picobotella.R
+import androidx.navigation.fragment.findNavController
 
 class HomeFragment : Fragment() {
 
@@ -72,6 +73,18 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
             } catch (e: ActivityNotFoundException) {
                 startActivity(viewModel.getWebFallbackIntent())
+            }
+        }
+
+        //boton para ir a instrucciones
+        val btnInfo = view.findViewById<ImageButton>(R.id.btnInfo)
+        btnInfo.setOnClickListener {
+            viewModel.onInfoClicked()
+        }
+
+        viewModel.navigateToInstructions.observe(viewLifecycleOwner) { shouldNavigate ->
+            if (shouldNavigate) {
+                findNavController().navigate(R.id.action_home_to_instructions)
             }
         }
 
