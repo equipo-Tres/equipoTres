@@ -17,9 +17,18 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels {
         val app = requireActivity().application as PicoBotellaApplication
-        HomeViewModelFactory(app.rateRepository)
+        HomeViewModelFactory(app.rateRepository, app.audioRepository)
+    }
+    //musica de fondo
+    override fun onResume() {
+        super.onResume()
+        viewModel.onHomeVisible()
     }
 
+    override fun onPause() {
+        viewModel.onHomeHidden()
+        super.onPause()
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
