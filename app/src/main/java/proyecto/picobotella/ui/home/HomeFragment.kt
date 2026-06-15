@@ -55,6 +55,18 @@ class HomeFragment : Fragment() {
             viewModel.onStarClicked()
         }
 
+        //boton del audio - criterio 3 hu 3
+        val btnAudio = view.findViewById<ImageButton>(R.id.btnAudio)
+        btnAudio.setOnClickListener {
+            viewModel.onAudioClicked() //llamado de la funcion que esta declarada en HomeViewModel
+        }
+
+        viewModel.isMusicEnabled.observe(viewLifecycleOwner){ isEnable ->
+            btnAudio.setImageResource(
+                if (isEnable) R.drawable.ic_sound_on else R.drawable.ic_sound_off
+            )
+        }
+
         viewModel.openPlayStore.observe(viewLifecycleOwner) { intent ->
             try {
                 startActivity(intent)

@@ -12,15 +12,27 @@ class HomeViewModel(
     private val audioRepository: AudioRepository
 ) : ViewModel() {
 
+    //criterio 3 hu 3
+    private val _isMusicEnabled = MutableLiveData(audioRepository.isMusicEnabled())
+    val isMusicEnabled: LiveData<Boolean> = _isMusicEnabled
+
+    private val _openPlayStore = MutableLiveData<Intent>()
+    val openPlayStore: LiveData<Intent> = _openPlayStore
+
     fun onHomeVisible() {
         audioRepository.startBackgroundMusic()
+        _isMusicEnabled.value = audioRepository.isMusicEnabled() //sirve para que al volver al home vuelva a quedar el icono encendido
     }
 
     fun onHomeHidden(){
         audioRepository.pauseBackgroundMusic()
     }
-    private val _openPlayStore = MutableLiveData<Intent>()
-    val openPlayStore: LiveData<Intent> = _openPlayStore
+
+    //criterio 3 hu3 on/of declarar funcion
+    fun onAudioClicked(){
+        val enabled = audioRepository.toggleBackgroundMusic()
+        _isMusicEnabled.value = enabled
+    }
 
     fun onStarClicked() {
         _openPlayStore.value = rateRepository.createPlayStoreIntent()
