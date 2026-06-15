@@ -13,4 +13,5 @@
     <string name="play_store_url">https://play.google.com/store/apps/details?id=com.nequi.MobileApp&amp;hl=es_419&amp;gl=es</string>
     <string name="play_store_package">com.android.vending</string>
     <string name="nequi_package">com.nequi.MobileApp</string>
+    <string name="instructions_placeholder">instrucciones!</string>
 </resources>
