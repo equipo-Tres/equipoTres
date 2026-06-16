@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import proyecto.picobotella.R
@@ -22,6 +24,12 @@ class InstructionsFragment : Fragment() {
         btnBack.setOnClickListener {
             findNavController().popBackStack() //vuelve al home
         }
+
+        val imgVictory = view.findViewById<ImageView>(R.id.imgVictory)
+        val victoryAnimation = AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.victory_animation
+        )
 
         return view
     }
