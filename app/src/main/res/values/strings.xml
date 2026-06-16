@@ -13,5 +13,8 @@
     <string name="play_store_url">https://play.google.com/store/apps/details?id=com.nequi.MobileApp&amp;hl=es_419&amp;gl=es</string>
     <string name="play_store_package">com.android.vending</string>
     <string name="nequi_package">com.nequi.MobileApp</string>
+    <string name="rules_title">Reglas del Juego</string>
+    <string name="back_button">Volver</string>
+    <string name="how_to_play_title">¿Cómo se juega?</string>
     <string name="instructions_placeholder">instrucciones!</string>
 </resources>

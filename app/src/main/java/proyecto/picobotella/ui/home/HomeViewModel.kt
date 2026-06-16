@@ -50,4 +50,8 @@ class HomeViewModel(
     fun getWebFallbackIntent(): Intent {
         return rateRepository.createWebFallbackIntent()
     }
+
+    fun onInstructionsNavigated() {
+        _navigateToInstructions.value = false
+    }
 }
