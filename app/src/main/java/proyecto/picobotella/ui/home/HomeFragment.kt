@@ -89,6 +89,19 @@ class HomeFragment : Fragment() {
             }
         }
 
+        // HU 6.0 - Retos
+        val btnRetos = view.findViewById<ImageButton>(R.id.btnRetos)
+        btnRetos.setOnClickListener {
+            viewModel.onRetosClicked()
+        }
+
+        viewModel.navigateToRetos.observe(viewLifecycleOwner) { shouldNavigate ->
+            if (shouldNavigate) {
+                findNavController().navigate(R.id.action_home_to_retos)
+                viewModel.onRetosNavigated()
+            }
+        }
+
         return view
     }
 }

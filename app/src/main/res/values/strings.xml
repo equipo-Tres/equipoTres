@@ -20,4 +20,12 @@
     <string name="who_wins_title">¿Quién gana?</string>
     <string name="who_wins_desc">Gana el último jugador que no abandone el juego.</string>
     <string name="victory_image">Animación de triunfo</string>
+    <string name="retos_title">Retos</string>
+    <string name="add_reto_button">Agregar reto</string>
+    <string name="delete_reto_button">Eliminar reto</string>
+    <string name="add_reto_title">Agregar reto</string>
+    <string name="reto_hint">Describe el reto…</string>
+    <string name="btn_add">Agregar</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="retos_empty">No hay retos aún.\n¡Toca el + para agregar el primero!</string>
 </resources>
