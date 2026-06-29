@@ -23,6 +23,10 @@ class HomeViewModel(
     private val _navigateToInstructions = MutableLiveData<Boolean>()
     val navigateToInstructions: LiveData<Boolean> = _navigateToInstructions
 
+    // HU 6.0 - Retos
+    private val _navigateToRetos = MutableLiveData<Boolean>()
+    val navigateToRetos: LiveData<Boolean> = _navigateToRetos
+
     fun onHomeVisible() {
         audioRepository.startBackgroundMusic()
         _isMusicEnabled.value = audioRepository.isMusicEnabled() //sirve para que al volver al home vuelva a quedar el icono encendido
@@ -53,5 +57,14 @@ class HomeViewModel(
 
     fun onInstructionsNavigated() {
         _navigateToInstructions.value = false
+    }
+
+    // HU 6.0 - Retos
+    fun onRetosClicked() {
+        _navigateToRetos.value = true
+    }
+
+    fun onRetosNavigated() {
+        _navigateToRetos.value = false
     }
 }

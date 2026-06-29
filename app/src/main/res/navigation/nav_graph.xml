@@ -24,11 +24,20 @@
             android:id="@+id/action_home_to_instructions"
             app:destination="@id/instructionsFragment" />
 
+        <action
+            android:id="@+id/action_home_to_retos"
+            app:destination="@id/retosFragment" />
+
     </fragment>
 
     <fragment
         android:id="@+id/instructionsFragment"
         android:name="proyecto.picobotella.ui.instructions.InstructionsFragment"
         android:label="InstructionsFragment" />
+
+    <fragment
+        android:id="@+id/retosFragment"
+        android:name="proyecto.picobotella.ui.retos.RetosFragment"
+        android:label="RetosFragment" />
 
 </navigation>
