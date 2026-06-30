@@ -22,6 +22,7 @@
     <string name="victory_image">Animación de triunfo</string>
     <string name="retos_title">Retos</string>
     <string name="add_reto_button">Agregar reto</string>
+    <string name="edit_reto_button">Editar reto</string>
     <string name="delete_reto_button">Eliminar reto</string>
     <string name="add_reto_title">Agregar reto</string>
     <string name="reto_hint">Describe el reto…</string>
