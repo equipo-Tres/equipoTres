@@ -10,6 +10,7 @@ import proyecto.picobotella.R
 import proyecto.picobotella.data.local.RetoEntity
 
 class RetoAdapter(
+    private val onEditClick: (RetoEntity) -> Unit,
     private val onDeleteClick: (RetoEntity) -> Unit
 ) : RecyclerView.Adapter<RetoAdapter.RetoViewHolder>() {
 
@@ -35,6 +36,9 @@ class RetoAdapter(
     inner class RetoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(reto: RetoEntity) {
             itemView.findViewById<TextView>(R.id.txtRetoDescription).text = reto.description
+            itemView.findViewById<ImageButton>(R.id.btnEditReto).setOnClickListener {
+                onEditClick(reto)
+            }
             itemView.findViewById<ImageButton>(R.id.btnDeleteReto).setOnClickListener {
                 onDeleteClick(reto)
             }
