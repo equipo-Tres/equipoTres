@@ -29,4 +29,9 @@ class RetosViewModel(private val retoRepository: RetoRepository, private val aud
             audioRepository.pauseBackgroundMusic()
         }
     }
+    fun onRetosHidden() {
+        if (audioRepository.isMusicEnabled()){
+            audioRepository.resumeBackgroundMusic()
+        }
+    }
 }

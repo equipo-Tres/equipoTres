@@ -16,6 +16,18 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:contentDescription="@string/back_button"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_arrow_back" />
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
