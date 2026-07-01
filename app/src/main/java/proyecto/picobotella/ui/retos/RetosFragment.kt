@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import proyecto.picobotella.PicoBotellaApplication
 import proyecto.picobotella.R
+import proyecto.picobotella.data.local.RetoEntity
 
 class RetosFragment : Fragment() {
 
@@ -21,7 +22,18 @@ class RetosFragment : Fragment() {
         RetosViewModelFactory(app.retoRepository, app.audioRepository)
     }
 
-    private val adapter = RetoAdapter({/*hu8 editar reto*/},{reto -> viewModel.deleteReto(reto)})
+    private val adapter = RetoAdapter({reto -> showEditRetoDialog(reto) /*HU-8*/},{reto -> showDeleteRetoDialog(reto) /*HU-9*/})
+
+    private fun showEditRetoDialog(reto: RetoEntity) {
+        // Crear un diálogo para editar el reto
+        // Boton guardar
+    }
+
+    private fun showDeleteRetoDialog(reto: RetoEntity) {
+        // Crear un diálogo para eliminar el reto
+        // SI
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
