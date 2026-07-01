@@ -10,7 +10,7 @@ import androidx.room.Query
 @Dao
 interface RetoDao {
 
-    @Query("SELECT * FROM retos ORDER BY id ASC")
+    @Query("SELECT * FROM retos ORDER BY id DESC") //criterio 6 HU-6 ordenar los retos en la parte superior
     fun getAll(): LiveData<List<RetoEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
