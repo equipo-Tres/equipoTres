@@ -52,8 +52,12 @@ class RetosFragment : Fragment() {
 
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setView(dialogView)
-            .setCancelable(true)
+            .setCancelable(false)
             .create()
+
+        dialogView.findViewById<TextView>(R.id.txtNo).setOnClickListener {
+            dialog.dismiss()
+        }
 
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
