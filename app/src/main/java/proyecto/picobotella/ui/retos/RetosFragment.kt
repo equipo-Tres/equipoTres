@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import proyecto.picobotella.PicoBotellaApplication
 import proyecto.picobotella.R
@@ -28,11 +29,20 @@ class RetosFragment : Fragment() {
     private fun showAddRetoDialog() {
         //cuadro de dialogo de agregar reto
         //se deja estructurado para que el fab sea clickeable
+        MaterialAlertDialogBuilder(requireContext())
+            .setCancelable(true)
+            .create()
+            .show()
     }
 
     private fun showEditRetoDialog(reto: RetoEntity) {
         // Crear un diálogo para editar el reto
         // Boton guardar
+        //prueba para el criterio 9 de la hu 6 despues se puede borrar
+        MaterialAlertDialogBuilder(requireContext())
+            .setCancelable(true)
+            .create()
+            .show()
     }
 
     private fun showDeleteRetoDialog(reto: RetoEntity) {
