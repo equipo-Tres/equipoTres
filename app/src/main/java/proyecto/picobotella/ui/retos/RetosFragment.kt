@@ -59,6 +59,11 @@ class RetosFragment : Fragment() {
             dialog.dismiss()
         }
 
+        dialogView.findViewById<TextView>(R.id.txtSi).setOnClickListener {
+            viewModel.deleteReto(reto)
+            dialog.dismiss()
+        }
+
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }
