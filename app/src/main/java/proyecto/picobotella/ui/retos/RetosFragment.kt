@@ -46,11 +46,26 @@ class RetosFragment : Fragment() {
     }
 
     private fun showDeleteRetoDialog(reto: RetoEntity) {
-        // Crear un diálogo para eliminar el reto
-        MaterialAlertDialogBuilder(requireContext())
-            .setCancelable(true)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_delete_reto, null)
+
+        dialogView.findViewById<TextView>(R.id.txtDeleteDescription).text = reto.description
+
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(dialogView)
+            .setCancelable(false) // HU-9 Criterio 6: solo se cierra con NO o SÍ
             .create()
-            .show()
+
+        dialogView.findViewById<TextView>(R.id.txtNo).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialogView.findViewById<TextView>(R.id.txtSi).setOnClickListener {
+            viewModel.deleteReto(reto)
+            dialog.dismiss()
+        }
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
     }
 
 

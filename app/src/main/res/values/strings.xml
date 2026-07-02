@@ -29,4 +29,7 @@
     <string name="btn_add">Agregar</string>
     <string name="btn_cancel">Cancelar</string>
     <string name="retos_empty">No hay retos aún.\n¡Toca el + para agregar el primero!</string>
+    <string name="dialog_delete_title">¿Desea eliminar el siguiente reto?</string>
+    <string name="dialog_no">NO</string>
+    <string name="dialog_si">SÍ</string>
 </resources>
