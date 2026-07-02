@@ -52,7 +52,7 @@ class RetosFragment : Fragment() {
 
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setView(dialogView)
-            .setCancelable(false)
+            .setCancelable(false) // HU-9 Criterio 6: solo se cierra con NO o SÍ
             .create()
 
         dialogView.findViewById<TextView>(R.id.txtNo).setOnClickListener {
