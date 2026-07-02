@@ -8,4 +8,14 @@
     android:padding="24dp"
     android:minHeight="80dp">
 
+    <TextView
+        android:id="@+id/txtDeleteTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/dialog_delete_title"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
 </LinearLayout>
