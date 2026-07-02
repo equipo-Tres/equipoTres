@@ -5,9 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:layout_margin="16dp"
-    app:cardBackgroundColor="#000000"
+    app:cardBackgroundColor="@color/dark_gray"
     app:cardCornerRadius="20dp"
-    app:cardElevation="8dp">
+    app:cardElevation="0dp"
+    app:cardUseCompatPadding="false"
+    app:cardPreventCornerOverlap="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,17 +40,10 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <ImageButton
-            android:id="@+id/btnAddReto"
+        <View
             android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@android:color/transparent"
-            android:clickable="true"
-            android:contentDescription="@string/add_reto_button"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_retos" />
+            android:layout_height="48dp" />
+
 
     </LinearLayout>
 

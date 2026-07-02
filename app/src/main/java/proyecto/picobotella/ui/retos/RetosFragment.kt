@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import proyecto.picobotella.PicoBotellaApplication
 import proyecto.picobotella.R
 import proyecto.picobotella.data.local.RetoEntity
@@ -24,6 +25,11 @@ class RetosFragment : Fragment() {
 
     private val adapter = RetoAdapter({reto -> showEditRetoDialog(reto) /*HU-8*/},{reto -> showDeleteRetoDialog(reto) /*HU-9*/})
 
+    private fun showAddRetoDialog() {
+        //cuadro de dialogo de agregar reto
+        //se deja estructurado para que el fab sea clickeable
+    }
+
     private fun showEditRetoDialog(reto: RetoEntity) {
         // Crear un diálogo para editar el reto
         // Boton guardar
@@ -31,7 +37,6 @@ class RetosFragment : Fragment() {
 
     private fun showDeleteRetoDialog(reto: RetoEntity) {
         // Crear un diálogo para eliminar el reto
-        // SI
     }
 
 
@@ -47,6 +52,11 @@ class RetosFragment : Fragment() {
         btnBack.setOnClickListener {
             viewModel.onRetosHidden()
             findNavController().popBackStack()
+        }
+
+        val fabAddReto = view.findViewById<FloatingActionButton>(R.id.fabAddReto)
+        fabAddReto.setOnClickListener {
+            showAddRetoDialog()
         }
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerRetos)
