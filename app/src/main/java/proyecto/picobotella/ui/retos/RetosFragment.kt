@@ -48,6 +48,8 @@ class RetosFragment : Fragment() {
     private fun showDeleteRetoDialog(reto: RetoEntity) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_delete_reto, null)
 
+        dialogView.findViewById<TextView>(R.id.txtDeleteDescription).text = reto.description
+
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setView(dialogView)
             .setCancelable(true)
