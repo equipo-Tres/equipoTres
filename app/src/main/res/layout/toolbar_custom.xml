@@ -62,7 +62,7 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_retos"
+            android:src="@drawable/ic_reto_toolbar"
             android:scaleType="centerInside"
             android:clickable="true"
             android:focusable="true"
