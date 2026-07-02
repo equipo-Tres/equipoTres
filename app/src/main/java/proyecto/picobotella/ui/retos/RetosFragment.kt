@@ -46,11 +46,15 @@ class RetosFragment : Fragment() {
     }
 
     private fun showDeleteRetoDialog(reto: RetoEntity) {
-        // Crear un diálogo para eliminar el reto
-        MaterialAlertDialogBuilder(requireContext())
+        val dialogView = layoutInflater.inflate(R.layout.dialog_delete_reto, null)
+
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(dialogView)
             .setCancelable(true)
             .create()
-            .show()
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
     }
 
 
