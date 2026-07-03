@@ -25,6 +25,7 @@
     <string name="edit_reto_button">Editar reto</string>
     <string name="delete_reto_button">Eliminar reto</string>
     <string name="add_reto_title">Agregar reto</string>
+    <string name="edit_reto_title">Editar reto</string>
     <string name="reto_hint">Describe el reto…</string>
     <string name="btn_add">Agregar</string>
     <string name="btn_cancel">Cancelar</string>
@@ -32,4 +33,9 @@
     <string name="dialog_delete_title">¿Desea eliminar el siguiente reto?</string>
     <string name="dialog_no">NO</string>
     <string name="dialog_si">SÍ</string>
+    <string name="sample_reto_1">Baila durante 30 segundos</string>
+    <string name="sample_reto_2">Imita a un animal</string>
+    <string name="sample_reto_3">Canta el coro de tu canción favorita</string>
+    <string name="sample_reto_4">Di un chiste en voz alta</string>
+    <string name="sample_reto_5">Haz 10 sentadillas</string>
 </resources>

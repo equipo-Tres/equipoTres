@@ -15,4 +15,12 @@ class RetoRepository(private val retoDao: RetoDao) {
     suspend fun delete(reto: RetoEntity) {
         retoDao.delete(reto)
     }
+
+    suspend fun seedSampleRetosIfEmpty(descriptions: List<String>) {
+        if (retoDao.getCount() == 0) {
+            descriptions.forEach { description ->
+                retoDao.insert(RetoEntity(description = description))
+            }
+        }
+    }
 }

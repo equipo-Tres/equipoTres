@@ -4,8 +4,17 @@ import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import proyecto.picobotella.data.repository.AudioRepository
 import proyecto.picobotella.data.repository.RateRepository
+
+private enum class GameState {
+    IDLE,
+    COUNTING
+}
 
 class HomeViewModel(
     private val rateRepository: RateRepository,
@@ -27,13 +36,57 @@ class HomeViewModel(
     private val _navigateToRetos = MutableLiveData<Boolean>()
     val navigateToRetos: LiveData<Boolean> = _navigateToRetos
 
+    // HU 2.0 C5 - contador regresivo
+    private val _counterValue = MutableLiveData(3)
+    val counterValue: LiveData<Int> = _counterValue
+
+    private val _isSpinButtonVisible = MutableLiveData(true)
+    val isSpinButtonVisible: LiveData<Boolean> = _isSpinButtonVisible
+
+    private var gameState = GameState.IDLE
+    private var countdownJob: Job? = null
+
     fun onHomeVisible() {
         audioRepository.startBackgroundMusic()
         _isMusicEnabled.value = audioRepository.isMusicEnabled() //sirve para que al volver al home vuelva a quedar el icono encendido
     }
 
-    fun onHomeHidden(){
+    fun onHomeHidden() {
         audioRepository.pauseBackgroundMusic()
+        cancelCountdown()
+    }
+
+    fun onSpinClicked() {
+        if (gameState != GameState.IDLE) return
+
+        gameState = GameState.COUNTING
+        _isSpinButtonVisible.value = false
+        startCountdown()
+    }
+
+    private fun startCountdown() {
+        countdownJob?.cancel()
+        countdownJob = viewModelScope.launch {
+            for (value in 3 downTo 0) {
+                _counterValue.value = value
+                delay(1000)
+            }
+            onCountdownFinished()
+        }
+    }
+
+    private fun onCountdownFinished() {
+        gameState = GameState.IDLE
+        _isSpinButtonVisible.value = true
+        _counterValue.value = 3
+    }
+
+    private fun cancelCountdown() {
+        countdownJob?.cancel()
+        countdownJob = null
+        gameState = GameState.IDLE
+        _counterValue.value = 3
+        _isSpinButtonVisible.value = true
     }
 
     //criterio 3 hu3 on/of declarar funcion

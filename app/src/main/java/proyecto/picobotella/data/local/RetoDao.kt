@@ -13,6 +13,9 @@ interface RetoDao {
     @Query("SELECT * FROM retos ORDER BY id DESC") //criterio 6 HU-6 ordenar los retos en la parte superior
     fun getAll(): LiveData<List<RetoEntity>>
 
+    @Query("SELECT COUNT(*) FROM retos")
+    suspend fun getCount(): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(reto: RetoEntity)
 
