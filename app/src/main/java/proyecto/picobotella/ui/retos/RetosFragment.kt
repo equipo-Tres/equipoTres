@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputEditText
 import proyecto.picobotella.PicoBotellaApplication
 import proyecto.picobotella.R
 import proyecto.picobotella.data.local.RetoEntity
@@ -36,13 +37,17 @@ class RetosFragment : Fragment() {
     }
 
     private fun showEditRetoDialog(reto: RetoEntity) {
-        // Crear un diálogo para editar el reto
-        // Boton guardar
-        //prueba para el criterio 9 de la hu 6 despues se puede borrar
-        MaterialAlertDialogBuilder(requireContext())
+        val dialogView = layoutInflater.inflate(R.layout.dialog_edit_reto, null)
+
+        dialogView.findViewById<TextInputEditText>(R.id.edtEditReto).setText(reto.description)
+
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(dialogView)
             .setCancelable(true)
             .create()
-            .show()
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
     }
 
     private fun showDeleteRetoDialog(reto: RetoEntity) {

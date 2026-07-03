@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import proyecto.picobotella.PicoBotellaApplication
@@ -43,6 +44,8 @@ class HomeFragment : Fragment() {
         )
 
         val btnSpin = view.findViewById<ImageView>(R.id.btnSpin)
+        val btnSpinContainer = view.findViewById<View>(R.id.btnSpinContainer)
+        val txtCounter = view.findViewById<TextView>(R.id.txtCounter)
 
         val pulseAnimation = AnimationUtils.loadAnimation(
             requireContext(),
@@ -50,6 +53,23 @@ class HomeFragment : Fragment() {
         )
 
         btnSpin.startAnimation(pulseAnimation)
+
+        btnSpin.setOnClickListener {
+            viewModel.onSpinClicked()
+        }
+
+        viewModel.counterValue.observe(viewLifecycleOwner) { value ->
+            txtCounter.text = value.toString()
+        }
+
+        viewModel.isSpinButtonVisible.observe(viewLifecycleOwner) { visible ->
+            btnSpinContainer.visibility = if (visible) View.VISIBLE else View.INVISIBLE
+            if (visible) {
+                btnSpin.startAnimation(pulseAnimation)
+            } else {
+                btnSpin.clearAnimation()
+            }
+        }
 
         val btnStar = view.findViewById<ImageButton>(R.id.btnStar)
         btnStar.setOnClickListener {
