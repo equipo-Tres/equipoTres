@@ -1,6 +1,7 @@
 package proyecto.picobotella.view.fragment
 
 import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -115,6 +116,11 @@ class HomeFragment : Fragment() {
             viewModel.onRetosClicked()
         }
 
+        val btnShare = view.findViewById<ImageButton>(R.id.btnShare)
+        btnShare.setOnClickListener {
+            viewModel.onShareClicked()
+        }
+
         viewModel.navigateToRetos.observe(viewLifecycleOwner) { shouldNavigate ->
             if (shouldNavigate) {
                 findNavController().navigate(R.id.action_home_to_retos)
@@ -122,6 +128,31 @@ class HomeFragment : Fragment() {
             }
         }
 
+        viewModel.shareAppEvent.observe(viewLifecycleOwner) { shouldShare ->
+            if (shouldShare) {
+                shareApp()
+                viewModel.onShareAppHandled()
+            }
+        }
+
         return view
+    }
+
+    private fun shareApp() {
+        val appLink = getString(R.string.share_app_url)
+        val shareText = getString(R.string.share_app_message, appLink)
+
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+            putExtra(Intent.EXTRA_TEXT, shareText)
+        }
+
+        startActivity(
+            Intent.createChooser(
+                shareIntent,
+                getString(R.string.share_app_chooser_title)
+            )
+        )
     }
 }

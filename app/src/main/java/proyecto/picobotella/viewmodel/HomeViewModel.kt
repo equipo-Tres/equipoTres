@@ -33,6 +33,9 @@ class HomeViewModel(
     private val _navigateToRetos = MutableLiveData<Boolean>()
     val navigateToRetos: LiveData<Boolean> = _navigateToRetos
 
+    private val _shareAppEvent = MutableLiveData<Boolean>()
+    val shareAppEvent: LiveData<Boolean> = _shareAppEvent
+
     private val _counterValue = MutableLiveData(3)
     val counterValue: LiveData<Int> = _counterValue
 
@@ -98,6 +101,10 @@ class HomeViewModel(
         _openPlayStore.value = rateRepository.createPlayStoreIntent()
     }
 
+    fun onShareClicked() {
+        _shareAppEvent.value = true
+    }
+
     fun getWebFallbackIntent(): Intent {
         return rateRepository.createWebFallbackIntent()
     }
@@ -112,5 +119,9 @@ class HomeViewModel(
 
     fun onRetosNavigated() {
         _navigateToRetos.value = false
+    }
+
+    fun onShareAppHandled() {
+        _shareAppEvent.value = false
     }
 }
