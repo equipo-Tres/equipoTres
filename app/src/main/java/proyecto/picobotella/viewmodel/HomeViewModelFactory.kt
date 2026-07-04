@@ -1,9 +1,9 @@
-package proyecto.picobotella.ui.home
+package proyecto.picobotella.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import proyecto.picobotella.data.repository.AudioRepository
-import proyecto.picobotella.data.repository.RateRepository
+import proyecto.picobotella.repository.AudioRepository
+import proyecto.picobotella.repository.RateRepository
 
 class HomeViewModelFactory(
     private val rateRepository: RateRepository,

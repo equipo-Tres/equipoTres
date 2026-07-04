@@ -1,4 +1,4 @@
-package proyecto.picobotella.data.local
+package proyecto.picobotella.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

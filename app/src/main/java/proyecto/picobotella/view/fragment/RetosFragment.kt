@@ -1,4 +1,4 @@
-package proyecto.picobotella.ui.retos
+package proyecto.picobotella.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +16,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import proyecto.picobotella.PicoBotellaApplication
 import proyecto.picobotella.R
-import proyecto.picobotella.data.local.RetoEntity
+import proyecto.picobotella.model.RetoEntity
+import proyecto.picobotella.view.adapter.RetoAdapter
+import proyecto.picobotella.viewmodel.RetosViewModel
+import proyecto.picobotella.viewmodel.RetosViewModelFactory
 
 class RetosFragment : Fragment() {
 
@@ -25,11 +28,12 @@ class RetosFragment : Fragment() {
         RetosViewModelFactory(app.retoRepository, app.audioRepository)
     }
 
-    private val adapter = RetoAdapter({reto -> showEditRetoDialog(reto) /*HU-8*/},{reto -> showDeleteRetoDialog(reto) /*HU-9*/})
+    private val adapter = RetoAdapter(
+        { reto -> showEditRetoDialog(reto) },
+        { reto -> showDeleteRetoDialog(reto) }
+    )
 
     private fun showAddRetoDialog() {
-        //cuadro de dialogo de agregar reto
-        //se deja estructurado para que el fab sea clickeable
         MaterialAlertDialogBuilder(requireContext())
             .setCancelable(true)
             .create()
@@ -57,7 +61,7 @@ class RetosFragment : Fragment() {
 
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setView(dialogView)
-            .setCancelable(false) // HU-9 Criterio 6: solo se cierra con NO o SÍ
+            .setCancelable(false)
             .create()
 
         dialogView.findViewById<TextView>(R.id.txtNo).setOnClickListener {
@@ -72,7 +76,6 @@ class RetosFragment : Fragment() {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -99,7 +102,7 @@ class RetosFragment : Fragment() {
 
         val txtEmpty = view.findViewById<TextView>(R.id.txtEmptyRetos)
 
-        viewModel.allRetos.observe(viewLifecycleOwner){ retos ->
+        viewModel.allRetos.observe(viewLifecycleOwner) { retos ->
             adapter.submitList(retos)
             txtEmpty.visibility = if (retos.isEmpty()) View.VISIBLE else View.GONE
         }
@@ -107,7 +110,7 @@ class RetosFragment : Fragment() {
         return view
     }
 
-    override fun onResume(){
+    override fun onResume() {
         super.onResume()
         viewModel.onRetosVisible()
     }

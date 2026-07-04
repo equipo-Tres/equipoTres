@@ -1,14 +1,17 @@
-package proyecto.picobotella.ui.retos
+package proyecto.picobotella.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import proyecto.picobotella.data.local.RetoEntity
-import proyecto.picobotella.data.repository.RetoRepository
-import proyecto.picobotella.data.repository.AudioRepository
+import proyecto.picobotella.model.RetoEntity
+import proyecto.picobotella.repository.AudioRepository
+import proyecto.picobotella.repository.RetoRepository
 
-class RetosViewModel(private val retoRepository: RetoRepository, private val audioRepository: AudioRepository) : ViewModel() {
+class RetosViewModel(
+    private val retoRepository: RetoRepository,
+    private val audioRepository: AudioRepository
+) : ViewModel() {
 
     val allRetos: LiveData<List<RetoEntity>> = retoRepository.allRetos
 
@@ -25,12 +28,13 @@ class RetosViewModel(private val retoRepository: RetoRepository, private val aud
     }
 
     fun onRetosVisible() {
-        if (audioRepository.isMusicEnabled()){
+        if (audioRepository.isMusicEnabled()) {
             audioRepository.pauseBackgroundMusic()
         }
     }
+
     fun onRetosHidden() {
-        if (audioRepository.isMusicEnabled()){
+        if (audioRepository.isMusicEnabled()) {
             audioRepository.resumeBackgroundMusic()
         }
     }

@@ -1,4 +1,4 @@
-package proyecto.picobotella.ui.home
+package proyecto.picobotella.view.fragment
 
 import android.content.ActivityNotFoundException
 import android.os.Bundle
@@ -11,9 +11,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import proyecto.picobotella.PicoBotellaApplication
 import proyecto.picobotella.R
-import androidx.navigation.fragment.findNavController
+import proyecto.picobotella.viewmodel.HomeViewModel
+import proyecto.picobotella.viewmodel.HomeViewModelFactory
 
 class HomeFragment : Fragment() {
 
@@ -21,7 +23,7 @@ class HomeFragment : Fragment() {
         val app = requireActivity().application as PicoBotellaApplication
         HomeViewModelFactory(app.rateRepository, app.audioRepository)
     }
-    //musica de fondo
+
     override fun onResume() {
         super.onResume()
         viewModel.onHomeVisible()
@@ -31,6 +33,7 @@ class HomeFragment : Fragment() {
         viewModel.onHomeHidden()
         super.onPause()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -76,13 +79,12 @@ class HomeFragment : Fragment() {
             viewModel.onStarClicked()
         }
 
-        //boton del audio - criterio 3 hu 3
         val btnAudio = view.findViewById<ImageButton>(R.id.btnAudio)
         btnAudio.setOnClickListener {
-            viewModel.onAudioClicked() //llamado de la funcion que esta declarada en HomeViewModel
+            viewModel.onAudioClicked()
         }
 
-        viewModel.isMusicEnabled.observe(viewLifecycleOwner){ isEnable ->
+        viewModel.isMusicEnabled.observe(viewLifecycleOwner) { isEnable ->
             btnAudio.setImageResource(
                 if (isEnable) R.drawable.ic_sound_on else R.drawable.ic_sound_off
             )
@@ -96,7 +98,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        //boton para ir a instrucciones
         val btnInfo = view.findViewById<ImageButton>(R.id.btnInfo)
         btnInfo.setOnClickListener {
             viewModel.onInfoClicked()
@@ -109,7 +110,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // HU 6.0 - Retos
         val btnRetos = view.findViewById<ImageButton>(R.id.btnRetos)
         btnRetos.setOnClickListener {
             viewModel.onRetosClicked()

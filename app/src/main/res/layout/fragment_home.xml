@@ -36,7 +36,7 @@
             android:src="@drawable/bottle"
             android:layout_marginTop="30dp"/>
 
-        <proyecto.picobotella.ui.home.OutlinedTextView
+        <proyecto.picobotella.view.OutlinedTextView
             android:id="@+id/txtCounter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

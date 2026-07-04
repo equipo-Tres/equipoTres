@@ -1,4 +1,4 @@
-package proyecto.picobotella.data.local
+package proyecto.picobotella.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -6,11 +6,12 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import proyecto.picobotella.model.RetoEntity
 
 @Dao
 interface RetoDao {
 
-    @Query("SELECT * FROM retos ORDER BY id DESC") //criterio 6 HU-6 ordenar los retos en la parte superior
+    @Query("SELECT * FROM retos ORDER BY id DESC")
     fun getAll(): LiveData<List<RetoEntity>>
 
     @Query("SELECT COUNT(*) FROM retos")
