@@ -1,4 +1,4 @@
-package proyecto.picobotella.data.repository
+package proyecto.picobotella.repository
 
 import android.content.Context
 import android.media.MediaPlayer
@@ -30,12 +30,12 @@ class AudioRepository(private val context: Context) {
             }
         }
     }
-    //volver al home y restaurar audio (implementar)
+
     fun resumeBackgroundMusic() {
         if (isPausedByUser) return
         mediaPlayer?.start()
     }
-    //es para despues implementar el boton de audio en toolbar
+
     fun toggleBackgroundMusic(): Boolean {
         isPausedByUser = !isPausedByUser
 
@@ -48,8 +48,8 @@ class AudioRepository(private val context: Context) {
         return !isPausedByUser
     }
 
-    fun isMusicEnabled(): Boolean = !isPausedByUser //on/off
-    //cerrar y liberar mediaplayer
+    fun isMusicEnabled(): Boolean = !isPausedByUser
+
     fun release() {
         mediaPlayer?.release()
         mediaPlayer = null

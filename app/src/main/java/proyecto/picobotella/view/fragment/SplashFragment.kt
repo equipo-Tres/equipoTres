@@ -1,4 +1,4 @@
-package proyecto.picobotella.ui.splash
+package proyecto.picobotella.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import proyecto.picobotella.R
+import proyecto.picobotella.viewmodel.SplashViewModel
 
 class SplashFragment : Fragment() {
 
@@ -40,7 +41,7 @@ class SplashFragment : Fragment() {
         viewModel.navigateToHome.observe(viewLifecycleOwner) { shouldNavigate ->
             if (shouldNavigate) {
                 findNavController().navigate(
-                    R.id.homeFragment,
+                    R.id.action_splash_to_home,
                     null,
                     NavOptions.Builder()
                         .setPopUpTo(R.id.splashFragment, true)

@@ -1,4 +1,4 @@
-package proyecto.picobotella.ui.home
+package proyecto.picobotella.view
 
 import android.content.Context
 import android.graphics.Canvas

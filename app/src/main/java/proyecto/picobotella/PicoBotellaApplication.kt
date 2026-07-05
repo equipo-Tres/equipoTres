@@ -5,10 +5,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import proyecto.picobotella.data.local.RetoDatabase
-import proyecto.picobotella.data.repository.AudioRepository
-import proyecto.picobotella.data.repository.RateRepository
-import proyecto.picobotella.data.repository.RetoRepository
+import proyecto.picobotella.data.RetoDatabase
+import proyecto.picobotella.repository.AudioRepository
+import proyecto.picobotella.repository.RateRepository
+import proyecto.picobotella.repository.RetoRepository
 
 class PicoBotellaApplication : Application() {
 

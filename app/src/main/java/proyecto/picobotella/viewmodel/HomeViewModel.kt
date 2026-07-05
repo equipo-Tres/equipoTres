@@ -1,4 +1,4 @@
-package proyecto.picobotella.ui.home
+package proyecto.picobotella.viewmodel
 
 import android.content.Intent
 import androidx.lifecycle.LiveData
@@ -8,8 +8,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import proyecto.picobotella.data.repository.AudioRepository
-import proyecto.picobotella.data.repository.RateRepository
+import proyecto.picobotella.repository.AudioRepository
+import proyecto.picobotella.repository.RateRepository
 
 private enum class GameState {
     IDLE,
@@ -21,22 +21,21 @@ class HomeViewModel(
     private val audioRepository: AudioRepository
 ) : ViewModel() {
 
-    //criterio 3 hu 3
     private val _isMusicEnabled = MutableLiveData(audioRepository.isMusicEnabled())
     val isMusicEnabled: LiveData<Boolean> = _isMusicEnabled
 
     private val _openPlayStore = MutableLiveData<Intent>()
     val openPlayStore: LiveData<Intent> = _openPlayStore
 
-    //criterio 4 hu3
     private val _navigateToInstructions = MutableLiveData<Boolean>()
     val navigateToInstructions: LiveData<Boolean> = _navigateToInstructions
 
-    // HU 6.0 - Retos
     private val _navigateToRetos = MutableLiveData<Boolean>()
     val navigateToRetos: LiveData<Boolean> = _navigateToRetos
 
-    // HU 2.0 C5 - contador regresivo
+    private val _shareAppEvent = MutableLiveData<Boolean>()
+    val shareAppEvent: LiveData<Boolean> = _shareAppEvent
+
     private val _counterValue = MutableLiveData(3)
     val counterValue: LiveData<Int> = _counterValue
 
@@ -48,7 +47,7 @@ class HomeViewModel(
 
     fun onHomeVisible() {
         audioRepository.startBackgroundMusic()
-        _isMusicEnabled.value = audioRepository.isMusicEnabled() //sirve para que al volver al home vuelva a quedar el icono encendido
+        _isMusicEnabled.value = audioRepository.isMusicEnabled()
     }
 
     fun onHomeHidden() {
@@ -89,19 +88,21 @@ class HomeViewModel(
         _isSpinButtonVisible.value = true
     }
 
-    //criterio 3 hu3 on/of declarar funcion
-    fun onAudioClicked(){
+    fun onAudioClicked() {
         val enabled = audioRepository.toggleBackgroundMusic()
         _isMusicEnabled.value = enabled
     }
 
-    //criterio 4 hu3 nav inst
     fun onInfoClicked() {
         _navigateToInstructions.value = true
     }
 
     fun onStarClicked() {
         _openPlayStore.value = rateRepository.createPlayStoreIntent()
+    }
+
+    fun onShareClicked() {
+        _shareAppEvent.value = true
     }
 
     fun getWebFallbackIntent(): Intent {
@@ -112,12 +113,15 @@ class HomeViewModel(
         _navigateToInstructions.value = false
     }
 
-    // HU 6.0 - Retos
     fun onRetosClicked() {
         _navigateToRetos.value = true
     }
 
     fun onRetosNavigated() {
         _navigateToRetos.value = false
+    }
+
+    fun onShareAppHandled() {
+        _shareAppEvent.value = false
     }
 }

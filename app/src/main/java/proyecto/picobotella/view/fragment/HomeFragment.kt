@@ -1,6 +1,7 @@
-package proyecto.picobotella.ui.home
+package proyecto.picobotella.view.fragment
 
 import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import proyecto.picobotella.PicoBotellaApplication
 import proyecto.picobotella.R
-import androidx.navigation.fragment.findNavController
+import proyecto.picobotella.viewmodel.HomeViewModel
+import proyecto.picobotella.viewmodel.HomeViewModelFactory
 
 class HomeFragment : Fragment() {
 
@@ -21,7 +24,7 @@ class HomeFragment : Fragment() {
         val app = requireActivity().application as PicoBotellaApplication
         HomeViewModelFactory(app.rateRepository, app.audioRepository)
     }
-    //musica de fondo
+
     override fun onResume() {
         super.onResume()
         viewModel.onHomeVisible()
@@ -31,6 +34,7 @@ class HomeFragment : Fragment() {
         viewModel.onHomeHidden()
         super.onPause()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -76,13 +80,12 @@ class HomeFragment : Fragment() {
             viewModel.onStarClicked()
         }
 
-        //boton del audio - criterio 3 hu 3
         val btnAudio = view.findViewById<ImageButton>(R.id.btnAudio)
         btnAudio.setOnClickListener {
-            viewModel.onAudioClicked() //llamado de la funcion que esta declarada en HomeViewModel
+            viewModel.onAudioClicked()
         }
 
-        viewModel.isMusicEnabled.observe(viewLifecycleOwner){ isEnable ->
+        viewModel.isMusicEnabled.observe(viewLifecycleOwner) { isEnable ->
             btnAudio.setImageResource(
                 if (isEnable) R.drawable.ic_sound_on else R.drawable.ic_sound_off
             )
@@ -96,7 +99,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        //boton para ir a instrucciones
         val btnInfo = view.findViewById<ImageButton>(R.id.btnInfo)
         btnInfo.setOnClickListener {
             viewModel.onInfoClicked()
@@ -109,10 +111,14 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // HU 6.0 - Retos
         val btnRetos = view.findViewById<ImageButton>(R.id.btnRetos)
         btnRetos.setOnClickListener {
             viewModel.onRetosClicked()
+        }
+
+        val btnShare = view.findViewById<ImageButton>(R.id.btnShare)
+        btnShare.setOnClickListener {
+            viewModel.onShareClicked()
         }
 
         viewModel.navigateToRetos.observe(viewLifecycleOwner) { shouldNavigate ->
@@ -122,6 +128,31 @@ class HomeFragment : Fragment() {
             }
         }
 
+        viewModel.shareAppEvent.observe(viewLifecycleOwner) { shouldShare ->
+            if (shouldShare) {
+                shareApp()
+                viewModel.onShareAppHandled()
+            }
+        }
+
         return view
+    }
+
+    private fun shareApp() {
+        val appLink = getString(R.string.share_app_url)
+        val shareText = getString(R.string.share_app_message, appLink)
+
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+            putExtra(Intent.EXTRA_TEXT, shareText)
+        }
+
+        startActivity(
+            Intent.createChooser(
+                shareIntent,
+                getString(R.string.share_app_chooser_title)
+            )
+        )
     }
 }
