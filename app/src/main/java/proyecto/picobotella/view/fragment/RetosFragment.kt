@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textfield.TextInputEditText
 import proyecto.picobotella.PicoBotellaApplication
 import proyecto.picobotella.R
@@ -29,8 +30,11 @@ import proyecto.picobotella.viewmodel.RetosViewModelFactory
 class RetosFragment : Fragment() {
 
     private var addRetoDialog: Dialog? = null
-    private var addRetoInput: TextInputEditText? = null
     private var addRetoSaveButton: MaterialButton? = null
+    private var addRetoInputLayout: TextInputLayout? = null
+    private var editRetoDialog: Dialog? = null
+    private var editRetoSaveButton: MaterialButton? = null
+    private var editRetoInputLayout: TextInputLayout? = null
 
     private val viewModel: RetosViewModel by viewModels {
         val app = requireActivity().application as PicoBotellaApplication
@@ -46,6 +50,7 @@ class RetosFragment : Fragment() {
         if (addRetoDialog?.isShowing == true) return
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_reto, null)
+        val inputLayoutAddReto = dialogView.findViewById<TextInputLayout>(R.id.inputLayoutAddReto)
         val edtAddReto = dialogView.findViewById<TextInputEditText>(R.id.edtAddReto)
         val btnCancel = dialogView.findViewById<MaterialButton>(R.id.btnCancelAddReto)
         val btnSave = dialogView.findViewById<MaterialButton>(R.id.btnSaveAddReto)
@@ -56,8 +61,8 @@ class RetosFragment : Fragment() {
             .create()
 
         addRetoDialog = dialog
-        addRetoInput = edtAddReto
         addRetoSaveButton = btnSave
+        addRetoInputLayout = inputLayoutAddReto
 
         edtAddReto.doAfterTextChanged { editable ->
             viewModel.onAddRetoTextChanged(editable?.toString().orEmpty())
@@ -75,8 +80,8 @@ class RetosFragment : Fragment() {
 
         dialog.setOnDismissListener {
             addRetoDialog = null
-            addRetoInput = null
             addRetoSaveButton = null
+            addRetoInputLayout = null
             viewModel.onAddRetoTextChanged("")
         }
 
@@ -96,17 +101,74 @@ class RetosFragment : Fragment() {
     }
 
     private fun showEditRetoDialog(reto: RetoEntity) {
+        if (editRetoDialog?.isShowing == true) return
+
         val dialogView = layoutInflater.inflate(R.layout.dialog_edit_reto, null)
 
-        dialogView.findViewById<EditText>(R.id.edtEditReto).setText(reto.description)
+        val inputLayoutEditReto = dialogView.findViewById<TextInputLayout>(R.id.inputLayoutEditReto)
+        val edtEditReto = dialogView.findViewById<TextInputEditText>(R.id.edtEditReto)
+        val btnCancel = dialogView.findViewById<MaterialButton>(R.id.btnCancelEditReto)
+        val btnSave = dialogView.findViewById<MaterialButton>(R.id.btnSaveEditReto)
 
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setView(dialogView)
-            .setCancelable(true)
+            .setCancelable(false)
             .create()
 
+        editRetoDialog = dialog
+        editRetoSaveButton = btnSave
+        editRetoInputLayout = inputLayoutEditReto
+
+        edtEditReto.setText(reto.description)
+
+        edtEditReto.doAfterTextChanged { editable ->
+            viewModel.onEditRetoTextChanged(
+                reto.description,
+                editable?.toString().orEmpty()
+            )
+        }
+
+        viewModel.onEditRetoTextChanged(
+            reto.description,
+            edtEditReto.text?.toString().orEmpty()
+        )
+
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnSave.setOnClickListener {
+            viewModel.updateReto(reto, edtEditReto.text?.toString().orEmpty())
+        }
+
+        dialog.setOnDismissListener {
+            editRetoDialog = null
+            editRetoSaveButton = null
+            editRetoInputLayout = null
+            viewModel.onEditRetoTextChanged(reto.description, "")
+        }
+
+        dialog.setCanceledOnTouchOutside(false)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
+    }
+
+    private fun renderEditRetoSaveState(isEnabled: Boolean) {
+        editRetoSaveButton?.let { button ->
+            button.isEnabled = isEnabled
+            button.backgroundTintList = ContextCompat.getColorStateList(
+                requireContext(),
+                if (isEnabled) R.color.orange else R.color.button_disabled
+            )
+        }
+    }
+
+    private fun renderAddRetoError(error: String?) {
+        addRetoInputLayout?.error = error
+    }
+
+    private fun renderEditRetoError(error: String?) {
+        editRetoInputLayout?.error = error
     }
 
     private fun showDeleteRetoDialog(reto: RetoEntity) {
@@ -171,6 +233,25 @@ class RetosFragment : Fragment() {
                 addRetoDialog?.dismiss()
                 viewModel.onAddRetoSavedHandled()
             }
+        }
+
+        viewModel.addRetoError.observe(viewLifecycleOwner) { error ->
+            renderAddRetoError(error)
+        }
+
+        viewModel.isEditRetoValid.observe(viewLifecycleOwner) { isValid ->
+            renderEditRetoSaveState(isValid)
+        }
+
+        viewModel.editRetoSavedEvent.observe(viewLifecycleOwner) { shouldDismiss ->
+            if (shouldDismiss) {
+                editRetoDialog?.dismiss()
+                viewModel.onEditRetoSavedHandled()
+            }
+        }
+
+        viewModel.editRetoError.observe(viewLifecycleOwner) { error ->
+            renderEditRetoError(error)
         }
 
         return view
