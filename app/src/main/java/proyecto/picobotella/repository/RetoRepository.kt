@@ -10,9 +10,27 @@ class RetoRepository(private val retoDao: RetoDao) {
 
     val allRetos: LiveData<List<RetoEntity>> = retoDao.getAll()
 
+    suspend fun existsByDescription(description: String): Boolean {
+        return withContext(Dispatchers.IO) {
+            retoDao.existsByDescription(description)
+        }
+    }
+
+    suspend fun existsByDescriptionExceptId(description: String, retoId: Int): Boolean {
+        return withContext(Dispatchers.IO) {
+            retoDao.existsByDescriptionExceptId(description, retoId)
+        }
+    }
+
     suspend fun insert(reto: RetoEntity) {
         withContext(Dispatchers.IO) {
             retoDao.insert(reto)
+        }
+    }
+
+    suspend fun update(reto: RetoEntity) {
+        withContext(Dispatchers.IO) {
+            retoDao.update(reto)
         }
     }
 

@@ -5,9 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_dialog_white"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:minHeight="80dp">
+    android:paddingStart="16dp"
+    android:paddingTop="24dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="24dp">
 
     <TextView
         android:id="@+id/txtEditTitle"
@@ -16,15 +19,15 @@
         android:gravity="center"
         android:text="@string/edit_reto_title"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutEditReto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:boxBackgroundMode="outline"
-        app:boxStrokeColor="@color/orange"
+        android:layout_marginTop="18dp"
+        app:boxBackgroundMode="none"
         app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -32,10 +35,71 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textCapSentences|textMultiLine"
+            android:background="@drawable/bg_reto_input"
+            android:gravity="start|center_vertical"
             android:maxLines="4"
+            android:minHeight="48dp"
+            android:paddingStart="0dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="10dp"
             android:textColor="@color/black"
+            android:textCursorDrawable="@null"
             android:textSize="15sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancelEditReto"
+            android:layout_width="110dp"
+            android:layout_height="42dp"
+            android:fontFamily="sans-serif-medium"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingStart="0dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="0dp"
+            android:text="@string/btn_cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:iconPadding="0dp"
+            app:backgroundTint="@color/orange"
+            app:cornerRadius="6dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSaveEditReto"
+            android:layout_width="110dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="36dp"
+            android:enabled="false"
+            android:fontFamily="sans-serif-medium"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingStart="0dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="0dp"
+            android:text="@string/btn_save"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:iconPadding="0dp"
+            app:backgroundTint="@color/orange"
+            app:cornerRadius="6dp" />
+
+    </LinearLayout>
 </LinearLayout>
