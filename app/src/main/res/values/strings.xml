@@ -32,6 +32,8 @@
     <string name="reto_hint">Describe el reto…</string>
     <string name="btn_add">Agregar</string>
     <string name="btn_cancel">Cancelar</string>
+    <string name="reto_input_hint">Escriba el reto</string>
+    <string name="btn_save">Guardar</string>
     <string name="retos_empty">No hay retos aún.\n¡Toca el + para agregar el primero!</string>
     <string name="dialog_delete_title">¿Desea eliminar el siguiente reto?</string>
     <string name="dialog_no">NO</string>
