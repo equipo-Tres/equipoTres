@@ -3,6 +3,7 @@ package proyecto.picobotella.view.fragment
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
@@ -17,6 +18,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import proyecto.picobotella.PicoBotellaApplication
 import proyecto.picobotella.R
 import proyecto.picobotella.utils.Constants
@@ -24,6 +27,8 @@ import proyecto.picobotella.viewmodel.HomeViewModel
 import proyecto.picobotella.viewmodel.HomeViewModelFactory
 
 class HomeFragment : Fragment() {
+
+    private var retoDialog: Dialog? = null
 
     private val viewModel: HomeViewModel by viewModels {
         val app = requireActivity().application as PicoBotellaApplication
@@ -169,7 +174,40 @@ class HomeFragment : Fragment() {
             }
         }
 
+        viewModel.showRetoDialog.observe(viewLifecycleOwner) { shouldShow ->
+            if (shouldShow) {
+                showRetoAleatorioDialog()
+                viewModel.onRetoDialogShown()
+            }
+        }
+
         return view
+    }
+
+    private fun showRetoAleatorioDialog() {
+        if (retoDialog?.isShowing == true) return
+
+        val dialogView = layoutInflater.inflate(R.layout.dialog_reto_aleatorio, null)
+        val btnClose = dialogView.findViewById<MaterialButton>(R.id.btnCloseRetoDialog)
+
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        retoDialog = dialog
+
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.setOnDismissListener {
+            retoDialog = null
+        }
+
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
     }
 
     private fun shareApp() {

@@ -52,6 +52,9 @@ class HomeViewModel(
     private val _isCounterVisible = MutableLiveData(false)
     val isCounterVisible: LiveData<Boolean> = _isCounterVisible
 
+    private val _showRetoDialog = MutableLiveData(false)
+    val showRetoDialog: LiveData<Boolean> = _showRetoDialog
+
     private val _spinTarget = MutableLiveData(0f)
     val spinTarget: LiveData<Float> = _spinTarget
 
@@ -109,6 +112,11 @@ class HomeViewModel(
         gameState = GameState.IDLE
         _isSpinButtonVisible.value = true
         _counterValue.value = 3
+        _showRetoDialog.value = true
+    }
+
+    fun onRetoDialogShown() {
+        _showRetoDialog.value = false
     }
 
     private fun cancelGame() {
