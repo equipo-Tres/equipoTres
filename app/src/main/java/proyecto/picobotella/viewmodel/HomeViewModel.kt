@@ -81,6 +81,7 @@ class HomeViewModel(
         accumulatedRotation += extraRotations + randomAngle
         _spinTarget.value = accumulatedRotation
 
+        audioRepository.pauseBackgroundMusic()
         gameState = GameState.SPINNING
         _isSpinButtonVisible.value = false
         _isBottleSpinning.value = true
@@ -117,6 +118,10 @@ class HomeViewModel(
 
     fun onRetoDialogShown() {
         _showRetoDialog.value = false
+    }
+
+    fun onRetoDialogClosed() {
+        audioRepository.resumeBackgroundMusic()
     }
 
     private fun cancelGame() {

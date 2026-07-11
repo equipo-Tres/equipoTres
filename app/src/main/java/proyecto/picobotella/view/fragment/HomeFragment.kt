@@ -203,6 +203,7 @@ class HomeFragment : Fragment() {
 
         dialog.setOnDismissListener {
             retoDialog = null
+            viewModel.onRetoDialogClosed()
         }
 
         dialog.setCanceledOnTouchOutside(false)
