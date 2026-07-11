@@ -9,6 +9,7 @@ import proyecto.picobotella.data.RetoDatabase
 import proyecto.picobotella.repository.AudioRepository
 import proyecto.picobotella.repository.RateRepository
 import proyecto.picobotella.repository.RetoRepository
+import proyecto.picobotella.repository.SpinSoundRepository
 
 class PicoBotellaApplication : Application() {
 
@@ -16,6 +17,10 @@ class PicoBotellaApplication : Application() {
 
     val audioRepository by lazy {
         AudioRepository(this)
+    }
+
+    val spinSoundRepository by lazy {
+        SpinSoundRepository(this)
     }
 
     val rateRepository by lazy {

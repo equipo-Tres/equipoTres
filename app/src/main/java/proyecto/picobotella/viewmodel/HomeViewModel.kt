@@ -10,6 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import proyecto.picobotella.repository.AudioRepository
 import proyecto.picobotella.repository.RateRepository
+import proyecto.picobotella.repository.SpinSoundRepository
 
 private enum class GameState {
     IDLE,
@@ -21,7 +22,8 @@ private const val SPIN_DURATION_MS = 4000L
 
 class HomeViewModel(
     private val rateRepository: RateRepository,
-    private val audioRepository: AudioRepository
+    private val audioRepository: AudioRepository,
+    private val spinSoundRepository: SpinSoundRepository
 ) : ViewModel() {
 
     private val _isMusicEnabled = MutableLiveData(audioRepository.isMusicEnabled())
@@ -67,6 +69,7 @@ class HomeViewModel(
         gameState = GameState.SPINNING
         _isSpinButtonVisible.value = false
         _isBottleSpinning.value = true
+        spinSoundRepository.startSpinSound()
         startGame()
     }
 
@@ -76,6 +79,7 @@ class HomeViewModel(
             delay(SPIN_DURATION_MS)
 
             _isBottleSpinning.value = false
+            spinSoundRepository.stopSpinSound()
             gameState = GameState.COUNTING
 
             for (value in 3 downTo 0) {
@@ -98,6 +102,7 @@ class HomeViewModel(
         gameJob = null
         gameState = GameState.IDLE
         _isBottleSpinning.value = false
+        spinSoundRepository.stopSpinSound()
         _counterValue.value = 3
         _isSpinButtonVisible.value = true
     }

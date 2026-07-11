@@ -24,7 +24,7 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels {
         val app = requireActivity().application as PicoBotellaApplication
-        HomeViewModelFactory(app.rateRepository, app.audioRepository)
+        HomeViewModelFactory(app.rateRepository, app.audioRepository, app.spinSoundRepository)
     }
 
     override fun onResume() {
