@@ -11,14 +11,13 @@ import kotlinx.coroutines.launch
 import proyecto.picobotella.repository.AudioRepository
 import proyecto.picobotella.repository.RateRepository
 import proyecto.picobotella.repository.SpinSoundRepository
+import proyecto.picobotella.utils.Constants
 
 private enum class GameState {
     IDLE,
     SPINNING,
     COUNTING
 }
-
-private const val SPIN_DURATION_MS = 4000L
 
 class HomeViewModel(
     private val rateRepository: RateRepository,
@@ -50,6 +49,11 @@ class HomeViewModel(
     private val _isBottleSpinning = MutableLiveData(false)
     val isBottleSpinning: LiveData<Boolean> = _isBottleSpinning
 
+    private val _spinTarget = MutableLiveData(0f)
+    val spinTarget: LiveData<Float> = _spinTarget
+
+    private var accumulatedRotation: Float = 0f
+
     private var gameState = GameState.IDLE
     private var gameJob: Job? = null
 
@@ -66,6 +70,11 @@ class HomeViewModel(
     fun onSpinClicked() {
         if (gameState != GameState.IDLE) return
 
+        val extraRotations = (2..4).random() * 360f
+        val randomAngle = (0 until 360).random().toFloat()
+        accumulatedRotation += extraRotations + randomAngle
+        _spinTarget.value = accumulatedRotation
+
         gameState = GameState.SPINNING
         _isSpinButtonVisible.value = false
         _isBottleSpinning.value = true
@@ -76,7 +85,7 @@ class HomeViewModel(
     private fun startGame() {
         gameJob?.cancel()
         gameJob = viewModelScope.launch {
-            delay(SPIN_DURATION_MS)
+            delay(Constants.SPIN_DURATION_MS)
 
             _isBottleSpinning.value = false
             spinSoundRepository.stopSpinSound()
@@ -101,6 +110,8 @@ class HomeViewModel(
         gameJob?.cancel()
         gameJob = null
         gameState = GameState.IDLE
+        accumulatedRotation = 0f
+        _spinTarget.value = 0f
         _isBottleSpinning.value = false
         spinSoundRepository.stopSpinSound()
         _counterValue.value = 3

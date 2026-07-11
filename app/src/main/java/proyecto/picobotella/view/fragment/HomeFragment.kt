@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.view.animation.LinearInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import proyecto.picobotella.PicoBotellaApplication
 import proyecto.picobotella.R
+import proyecto.picobotella.utils.Constants
 import proyecto.picobotella.viewmodel.HomeViewModel
 import proyecto.picobotella.viewmodel.HomeViewModelFactory
 
@@ -69,11 +70,10 @@ class HomeFragment : Fragment() {
 
         viewModel.isBottleSpinning.observe(viewLifecycleOwner) { spinning ->
             if (spinning) {
-                bottleSpinAnimator = ObjectAnimator.ofFloat(imgBottle, "rotation", 0f, 360f).apply {
-                    duration = 500L
-                    repeatCount = ObjectAnimator.INFINITE
-                    repeatMode = ObjectAnimator.RESTART
-                    interpolator = LinearInterpolator()
+                val target = viewModel.spinTarget.value ?: imgBottle.rotation
+                bottleSpinAnimator = ObjectAnimator.ofFloat(imgBottle, "rotation", imgBottle.rotation, target).apply {
+                    duration = Constants.SPIN_DURATION_MS
+                    interpolator = DecelerateInterpolator(2f)
                     start()
                 }
             } else {
