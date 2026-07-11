@@ -13,8 +13,11 @@ import proyecto.picobotella.repository.RateRepository
 
 private enum class GameState {
     IDLE,
+    SPINNING,
     COUNTING
 }
+
+private const val SPIN_DURATION_MS = 4000L
 
 class HomeViewModel(
     private val rateRepository: RateRepository,
@@ -42,8 +45,11 @@ class HomeViewModel(
     private val _isSpinButtonVisible = MutableLiveData(true)
     val isSpinButtonVisible: LiveData<Boolean> = _isSpinButtonVisible
 
+    private val _isBottleSpinning = MutableLiveData(false)
+    val isBottleSpinning: LiveData<Boolean> = _isBottleSpinning
+
     private var gameState = GameState.IDLE
-    private var countdownJob: Job? = null
+    private var gameJob: Job? = null
 
     fun onHomeVisible() {
         audioRepository.startBackgroundMusic()
@@ -52,24 +58,31 @@ class HomeViewModel(
 
     fun onHomeHidden() {
         audioRepository.pauseBackgroundMusic()
-        cancelCountdown()
+        cancelGame()
     }
 
     fun onSpinClicked() {
         if (gameState != GameState.IDLE) return
 
-        gameState = GameState.COUNTING
+        gameState = GameState.SPINNING
         _isSpinButtonVisible.value = false
-        startCountdown()
+        _isBottleSpinning.value = true
+        startGame()
     }
 
-    private fun startCountdown() {
-        countdownJob?.cancel()
-        countdownJob = viewModelScope.launch {
+    private fun startGame() {
+        gameJob?.cancel()
+        gameJob = viewModelScope.launch {
+            delay(SPIN_DURATION_MS)
+
+            _isBottleSpinning.value = false
+            gameState = GameState.COUNTING
+
             for (value in 3 downTo 0) {
                 _counterValue.value = value
                 delay(1000)
             }
+
             onCountdownFinished()
         }
     }
@@ -80,10 +93,11 @@ class HomeViewModel(
         _counterValue.value = 3
     }
 
-    private fun cancelCountdown() {
-        countdownJob?.cancel()
-        countdownJob = null
+    private fun cancelGame() {
+        gameJob?.cancel()
+        gameJob = null
         gameState = GameState.IDLE
+        _isBottleSpinning.value = false
         _counterValue.value = 3
         _isSpinButtonVisible.value = true
     }

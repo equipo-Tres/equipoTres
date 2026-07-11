@@ -1,5 +1,6 @@
 package proyecto.picobotella.view.fragment
 
+import android.animation.ObjectAnimator
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.view.animation.LinearInterpolator
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -47,6 +49,7 @@ class HomeFragment : Fragment() {
             false
         )
 
+        val imgBottle = view.findViewById<ImageView>(R.id.imgBottle)
         val btnSpin = view.findViewById<ImageView>(R.id.btnSpin)
         val btnSpinContainer = view.findViewById<View>(R.id.btnSpinContainer)
         val txtCounter = view.findViewById<TextView>(R.id.txtCounter)
@@ -56,10 +59,27 @@ class HomeFragment : Fragment() {
             R.anim.button_pulse
         )
 
+        var bottleSpinAnimator: ObjectAnimator? = null
+
         btnSpin.startAnimation(pulseAnimation)
 
         btnSpin.setOnClickListener {
             viewModel.onSpinClicked()
+        }
+
+        viewModel.isBottleSpinning.observe(viewLifecycleOwner) { spinning ->
+            if (spinning) {
+                bottleSpinAnimator = ObjectAnimator.ofFloat(imgBottle, "rotation", 0f, 360f).apply {
+                    duration = 500L
+                    repeatCount = ObjectAnimator.INFINITE
+                    repeatMode = ObjectAnimator.RESTART
+                    interpolator = LinearInterpolator()
+                    start()
+                }
+            } else {
+                bottleSpinAnimator?.cancel()
+                bottleSpinAnimator = null
+            }
         }
 
         viewModel.counterValue.observe(viewLifecycleOwner) { value ->
