@@ -49,6 +49,9 @@ class HomeViewModel(
     private val _isBottleSpinning = MutableLiveData(false)
     val isBottleSpinning: LiveData<Boolean> = _isBottleSpinning
 
+    private val _isCounterVisible = MutableLiveData(false)
+    val isCounterVisible: LiveData<Boolean> = _isCounterVisible
+
     private val _spinTarget = MutableLiveData(0f)
     val spinTarget: LiveData<Float> = _spinTarget
 
@@ -90,6 +93,7 @@ class HomeViewModel(
             _isBottleSpinning.value = false
             spinSoundRepository.stopSpinSound()
             gameState = GameState.COUNTING
+            _isCounterVisible.value = true
 
             for (value in 3 downTo 0) {
                 _counterValue.value = value
@@ -101,6 +105,7 @@ class HomeViewModel(
     }
 
     private fun onCountdownFinished() {
+        _isCounterVisible.value = false
         gameState = GameState.IDLE
         _isSpinButtonVisible.value = true
         _counterValue.value = 3
@@ -113,6 +118,7 @@ class HomeViewModel(
         accumulatedRotation = 0f
         _spinTarget.value = 0f
         _isBottleSpinning.value = false
+        _isCounterVisible.value = false
         spinSoundRepository.stopSpinSound()
         _counterValue.value = 3
         _isSpinButtonVisible.value = true

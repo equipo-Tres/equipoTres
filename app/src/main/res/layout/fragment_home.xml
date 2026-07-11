@@ -47,6 +47,7 @@
             android:textColor="#FFA500"
             android:textSize="65sp"
             android:textStyle="bold"
+            android:visibility="invisible"
             />
 
     </FrameLayout>

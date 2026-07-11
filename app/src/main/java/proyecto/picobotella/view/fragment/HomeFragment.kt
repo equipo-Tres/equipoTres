@@ -92,6 +92,10 @@ class HomeFragment : Fragment() {
             }
         }
 
+        viewModel.isCounterVisible.observe(viewLifecycleOwner) { visible ->
+            txtCounter.visibility = if (visible) View.VISIBLE else View.INVISIBLE
+        }
+
         viewModel.counterValue.observe(viewLifecycleOwner) { value ->
             txtCounter.text = value.toString()
         }
