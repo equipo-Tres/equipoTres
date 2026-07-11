@@ -18,8 +18,9 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.button.MaterialButton
+import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.imageview.ShapeableImageView
 import proyecto.picobotella.PicoBotellaApplication
 import proyecto.picobotella.R
 import proyecto.picobotella.utils.Constants
@@ -32,7 +33,7 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels {
         val app = requireActivity().application as PicoBotellaApplication
-        HomeViewModelFactory(app.rateRepository, app.audioRepository, app.spinSoundRepository)
+        HomeViewModelFactory(app.rateRepository, app.audioRepository, app.spinSoundRepository, app.pokemonRepository)
     }
 
     override fun onResume() {
@@ -188,25 +189,27 @@ class HomeFragment : Fragment() {
         if (retoDialog?.isShowing == true) return
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_reto_aleatorio, null)
-        val btnClose = dialogView.findViewById<MaterialButton>(R.id.btnCloseRetoDialog)
+        val imgPokemon = dialogView.findViewById<ShapeableImageView>(R.id.imgPokemon)
+
+        viewModel.pokemonImageUrl.value?.let { url ->
+            Glide.with(this)
+                .load(url)
+                .into(imgPokemon)
+        }
 
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setView(dialogView)
-            .setCancelable(false)
+            .setCancelable(true)
             .create()
 
         retoDialog = dialog
-
-        btnClose.setOnClickListener {
-            dialog.dismiss()
-        }
 
         dialog.setOnDismissListener {
             retoDialog = null
             viewModel.onRetoDialogClosed()
         }
 
-        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCanceledOnTouchOutside(true)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }

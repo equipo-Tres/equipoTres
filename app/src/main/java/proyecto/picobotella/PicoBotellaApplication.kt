@@ -7,6 +7,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import proyecto.picobotella.data.RetoDatabase
 import proyecto.picobotella.repository.AudioRepository
+import proyecto.picobotella.repository.PokemonRepository
 import proyecto.picobotella.repository.RateRepository
 import proyecto.picobotella.repository.RetoRepository
 import proyecto.picobotella.repository.SpinSoundRepository
@@ -21,6 +22,10 @@ class PicoBotellaApplication : Application() {
 
     val spinSoundRepository by lazy {
         SpinSoundRepository(this)
+    }
+
+    val pokemonRepository by lazy {
+        PokemonRepository()
     }
 
     val rateRepository by lazy {

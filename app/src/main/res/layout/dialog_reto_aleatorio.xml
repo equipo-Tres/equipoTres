@@ -1,54 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_dialog_dark"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:paddingStart="24dp"
-    android:paddingTop="28dp"
-    android:paddingEnd="24dp"
-    android:paddingBottom="24dp">
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:paddingTop="55dp">
 
-    <TextView
-        android:id="@+id/txtRetoDialogTitle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/dialog_reto_title"
-        android:textColor="@color/orange"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:background="@drawable/bg_dialog_dark"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingTop="64dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="32dp">
 
-    <TextView
-        android:id="@+id/txtRetoDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:minHeight="60dp"
-        android:textColor="@color/black"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/txtRetoDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="60dp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCloseRetoDialog"
-        android:layout_width="140dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="28dp"
-        android:fontFamily="sans-serif-medium"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:minHeight="0dp"
-        android:minWidth="0dp"
-        android:text="@string/dialog_reto_close"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:backgroundTint="@color/orange"
-        app:cornerRadius="6dp"
-        app:iconPadding="0dp" />
+    </LinearLayout>
 
-</LinearLayout>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgPokemon"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_gravity="top|center_horizontal"
+        android:background="@color/black"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Circle"
+        app:strokeColor="@android:color/white"
+        app:strokeWidth="3dp" />
+
+</FrameLayout>

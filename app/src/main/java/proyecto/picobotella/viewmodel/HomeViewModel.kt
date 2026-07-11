@@ -9,6 +9,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import proyecto.picobotella.repository.AudioRepository
+import proyecto.picobotella.repository.PokemonRepository
 import proyecto.picobotella.repository.RateRepository
 import proyecto.picobotella.repository.SpinSoundRepository
 import proyecto.picobotella.utils.Constants
@@ -22,7 +23,8 @@ private enum class GameState {
 class HomeViewModel(
     private val rateRepository: RateRepository,
     private val audioRepository: AudioRepository,
-    private val spinSoundRepository: SpinSoundRepository
+    private val spinSoundRepository: SpinSoundRepository,
+    private val pokemonRepository: PokemonRepository
 ) : ViewModel() {
 
     private val _isMusicEnabled = MutableLiveData(audioRepository.isMusicEnabled())
@@ -57,6 +59,9 @@ class HomeViewModel(
 
     private val _spinTarget = MutableLiveData(0f)
     val spinTarget: LiveData<Float> = _spinTarget
+
+    private val _pokemonImageUrl = MutableLiveData<String?>()
+    val pokemonImageUrl: LiveData<String?> = _pokemonImageUrl
 
     private var accumulatedRotation: Float = 0f
 
@@ -104,6 +109,7 @@ class HomeViewModel(
                 delay(1000)
             }
 
+            _pokemonImageUrl.value = pokemonRepository.getRandomPokemonImageUrl()
             onCountdownFinished()
         }
     }
