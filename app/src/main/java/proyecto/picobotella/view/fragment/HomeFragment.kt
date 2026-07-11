@@ -59,7 +59,7 @@ class HomeFragment : Fragment() {
 
         val imgBottle = view.findViewById<ImageView>(R.id.imgBottle)
         val btnSpin = view.findViewById<ImageView>(R.id.btnSpin)
-        val btnSpinContainer = view.findViewById<View>(R.id.btnSpinContainer)
+        val spinContainer = view.findViewById<View>(R.id.spinContainer)
         val txtCounter = view.findViewById<TextView>(R.id.txtCounter)
 
         val pulseAnimation = AnimationUtils.loadAnimation(
@@ -106,7 +106,7 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.isSpinButtonVisible.observe(viewLifecycleOwner) { visible ->
-            btnSpinContainer.visibility = if (visible) View.VISIBLE else View.INVISIBLE
+            spinContainer.visibility = if (visible) View.VISIBLE else View.INVISIBLE
             if (visible) {
                 btnSpin.startAnimation(pulseAnimation)
             } else {
