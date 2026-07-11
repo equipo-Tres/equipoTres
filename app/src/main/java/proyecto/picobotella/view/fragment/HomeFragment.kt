@@ -1,5 +1,7 @@
 package proyecto.picobotella.view.fragment
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -74,6 +76,14 @@ class HomeFragment : Fragment() {
                 bottleSpinAnimator = ObjectAnimator.ofFloat(imgBottle, "rotation", imgBottle.rotation, target).apply {
                     duration = Constants.SPIN_DURATION_MS
                     interpolator = DecelerateInterpolator(2f)
+                    addListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            imgBottle.rotation = target
+                        }
+                        override fun onAnimationCancel(animation: Animator) {
+                            imgBottle.rotation = target
+                        }
+                    })
                     start()
                 }
             } else {
