@@ -14,6 +14,7 @@ material = "1.14.0"
 activity = "1.13.0"
 constraintlayout = "2.2.1"
 lottie = "6.0.0"
+glide = "4.16.0"
 navigationFragmentKtx = "2.9.8"
 navigationUiKtx = "2.9.8"
 
@@ -27,6 +28,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
