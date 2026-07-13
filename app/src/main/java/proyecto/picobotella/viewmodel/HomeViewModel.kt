@@ -30,8 +30,8 @@ class HomeViewModel(
     private val _isMusicEnabled = MutableLiveData(audioRepository.isMusicEnabled())
     val isMusicEnabled: LiveData<Boolean> = _isMusicEnabled
 
-    private val _openPlayStore = MutableLiveData<Intent>()
-    val openPlayStore: LiveData<Intent> = _openPlayStore
+    private val _openPlayStore = MutableLiveData<Intent?>()
+    val openPlayStore: LiveData<Intent?> = _openPlayStore
 
     private val _navigateToInstructions = MutableLiveData<Boolean>()
     val navigateToInstructions: LiveData<Boolean> = _navigateToInstructions
@@ -51,7 +51,7 @@ class HomeViewModel(
     private val _isBottleSpinning = MutableLiveData(false)
     val isBottleSpinning: LiveData<Boolean> = _isBottleSpinning
 
-    private val _isCounterVisible = MutableLiveData(false)
+    private val _isCounterVisible = MutableLiveData(true)
     val isCounterVisible: LiveData<Boolean> = _isCounterVisible
 
     private val _showRetoDialog = MutableLiveData(false)
@@ -64,12 +64,15 @@ class HomeViewModel(
     val pokemonImageUrl: LiveData<String?> = _pokemonImageUrl
 
     private var accumulatedRotation: Float = 0f
+    private var spinStartedAt: Long = 0L
 
     private var gameState = GameState.IDLE
     private var gameJob: Job? = null
 
     fun onHomeVisible() {
-        audioRepository.startBackgroundMusic()
+        if (gameState == GameState.IDLE) {
+            audioRepository.startBackgroundMusic()
+        }
         _isMusicEnabled.value = audioRepository.isMusicEnabled()
     }
 
@@ -85,10 +88,12 @@ class HomeViewModel(
         val randomAngle = (0 until 360).random().toFloat()
         accumulatedRotation += extraRotations + randomAngle
         _spinTarget.value = accumulatedRotation
+        spinStartedAt = System.currentTimeMillis()
 
         audioRepository.pauseBackgroundMusic()
         gameState = GameState.SPINNING
         _isSpinButtonVisible.value = false
+        _isCounterVisible.value = false
         _isBottleSpinning.value = true
         spinSoundRepository.startSpinSound()
         startGame()
@@ -115,7 +120,7 @@ class HomeViewModel(
     }
 
     private fun onCountdownFinished() {
-        _isCounterVisible.value = false
+        _isCounterVisible.value = true
         gameState = GameState.IDLE
         _isSpinButtonVisible.value = true
         _counterValue.value = 3
@@ -134,10 +139,8 @@ class HomeViewModel(
         gameJob?.cancel()
         gameJob = null
         gameState = GameState.IDLE
-        accumulatedRotation = 0f
-        _spinTarget.value = 0f
         _isBottleSpinning.value = false
-        _isCounterVisible.value = false
+        _isCounterVisible.value = true
         spinSoundRepository.stopSpinSound()
         _counterValue.value = 3
         _isSpinButtonVisible.value = true
@@ -178,5 +181,15 @@ class HomeViewModel(
 
     fun onShareAppHandled() {
         _shareAppEvent.value = false
+    }
+
+    fun onPlayStoreHandled() {
+        _openPlayStore.value = null
+    }
+
+    fun getRemainingSpinDurationMs(): Long {
+        if (gameState != GameState.SPINNING) return 0L
+        val elapsed = System.currentTimeMillis() - spinStartedAt
+        return (Constants.SPIN_DURATION_MS - elapsed).coerceAtLeast(0L)
     }
 }

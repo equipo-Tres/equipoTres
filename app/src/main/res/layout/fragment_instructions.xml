@@ -82,8 +82,8 @@
         android:layout_marginTop="32dp"
         android:contentDescription="@string/victory_image"
         app:lottie_rawRes="@raw/trophy"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

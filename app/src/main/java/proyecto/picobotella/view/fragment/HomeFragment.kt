@@ -23,7 +23,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.imageview.ShapeableImageView
 import proyecto.picobotella.PicoBotellaApplication
 import proyecto.picobotella.R
-import proyecto.picobotella.utils.Constants
+import proyecto.picobotella.utils.TouchAnimation
 import proyecto.picobotella.viewmodel.HomeViewModel
 import proyecto.picobotella.viewmodel.HomeViewModelFactory
 
@@ -42,7 +42,9 @@ class HomeFragment : Fragment() {
     }
 
     override fun onPause() {
-        viewModel.onHomeHidden()
+        if (!requireActivity().isChangingConfigurations) {
+            viewModel.onHomeHidden()
+        }
         super.onPause()
     }
 
@@ -59,6 +61,8 @@ class HomeFragment : Fragment() {
         )
 
         val imgBottle = view.findViewById<ImageView>(R.id.imgBottle)
+        imgBottle.rotation = viewModel.spinTarget.value ?: 0f
+
         val btnSpin = view.findViewById<ImageView>(R.id.btnSpin)
         val spinContainer = view.findViewById<View>(R.id.spinContainer)
         val txtCounter = view.findViewById<TextView>(R.id.txtCounter)
@@ -79,8 +83,13 @@ class HomeFragment : Fragment() {
         viewModel.isBottleSpinning.observe(viewLifecycleOwner) { spinning ->
             if (spinning) {
                 val target = viewModel.spinTarget.value ?: imgBottle.rotation
+                val remainingDuration = viewModel.getRemainingSpinDurationMs()
+                if (remainingDuration <= 0L) {
+                    imgBottle.rotation = target
+                    return@observe
+                }
                 bottleSpinAnimator = ObjectAnimator.ofFloat(imgBottle, "rotation", imgBottle.rotation, target).apply {
-                    duration = Constants.SPIN_DURATION_MS
+                    duration = remainingDuration
                     interpolator = DecelerateInterpolator(2f)
                     addListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
@@ -95,6 +104,7 @@ class HomeFragment : Fragment() {
             } else {
                 bottleSpinAnimator?.cancel()
                 bottleSpinAnimator = null
+                imgBottle.rotation = viewModel.spinTarget.value ?: imgBottle.rotation
             }
         }
 
@@ -116,14 +126,10 @@ class HomeFragment : Fragment() {
         }
 
         val btnStar = view.findViewById<ImageButton>(R.id.btnStar)
-        btnStar.setOnClickListener {
-            viewModel.onStarClicked()
-        }
+        setupToolbarButton(btnStar) { viewModel.onStarClicked() }
 
         val btnAudio = view.findViewById<ImageButton>(R.id.btnAudio)
-        btnAudio.setOnClickListener {
-            viewModel.onAudioClicked()
-        }
+        setupToolbarButton(btnAudio) { viewModel.onAudioClicked() }
 
         viewModel.isMusicEnabled.observe(viewLifecycleOwner) { isEnable ->
             btnAudio.setImageResource(
@@ -132,17 +138,18 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.openPlayStore.observe(viewLifecycleOwner) { intent ->
+            if (intent == null) return@observe
+
             try {
                 startActivity(intent)
             } catch (e: ActivityNotFoundException) {
                 startActivity(viewModel.getWebFallbackIntent())
             }
+            viewModel.onPlayStoreHandled()
         }
 
         val btnInfo = view.findViewById<ImageButton>(R.id.btnInfo)
-        btnInfo.setOnClickListener {
-            viewModel.onInfoClicked()
-        }
+        setupToolbarButton(btnInfo) { viewModel.onInfoClicked() }
 
         viewModel.navigateToInstructions.observe(viewLifecycleOwner) { shouldNavigate ->
             if (shouldNavigate) {
@@ -152,14 +159,10 @@ class HomeFragment : Fragment() {
         }
 
         val btnRetos = view.findViewById<ImageButton>(R.id.btnRetos)
-        btnRetos.setOnClickListener {
-            viewModel.onRetosClicked()
-        }
+        setupToolbarButton(btnRetos) { viewModel.onRetosClicked() }
 
         val btnShare = view.findViewById<ImageButton>(R.id.btnShare)
-        btnShare.setOnClickListener {
-            viewModel.onShareClicked()
-        }
+        setupToolbarButton(btnShare) { viewModel.onShareClicked() }
 
         viewModel.navigateToRetos.observe(viewLifecycleOwner) { shouldNavigate ->
             if (shouldNavigate) {
@@ -183,6 +186,12 @@ class HomeFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun setupToolbarButton(button: ImageButton, action: () -> Unit) {
+        button.setOnClickListener { view ->
+            TouchAnimation.play(view, action)
+        }
     }
 
     private fun showRetoAleatorioDialog() {

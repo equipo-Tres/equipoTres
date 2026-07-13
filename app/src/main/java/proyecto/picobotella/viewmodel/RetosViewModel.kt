@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import proyecto.picobotella.R
 import proyecto.picobotella.model.RetoEntity
 import proyecto.picobotella.repository.AudioRepository
 import proyecto.picobotella.repository.RetoRepository
@@ -22,8 +23,8 @@ class RetosViewModel(
     private val _addRetoSavedEvent = MutableLiveData(false)
     val addRetoSavedEvent: LiveData<Boolean> = _addRetoSavedEvent
 
-    private val _addRetoError = MutableLiveData<String?>()
-    val addRetoError: LiveData<String?> = _addRetoError
+    private val _addRetoError = MutableLiveData<Int?>()
+    val addRetoError: LiveData<Int?> = _addRetoError
 
     private val _isEditRetoValid = MutableLiveData(false)
     val isEditRetoValid: LiveData<Boolean> = _isEditRetoValid
@@ -31,8 +32,8 @@ class RetosViewModel(
     private val _editRetoSavedEvent = MutableLiveData(false)
     val editRetoSavedEvent: LiveData<Boolean> = _editRetoSavedEvent
 
-    private val _editRetoError = MutableLiveData<String?>()
-    val editRetoError: LiveData<String?> = _editRetoError
+    private val _editRetoError = MutableLiveData<Int?>()
+    val editRetoError: LiveData<Int?> = _editRetoError
 
     fun onAddRetoTextChanged(description: String) {
         _isAddRetoValid.value = description.trim().isNotEmpty()
@@ -52,7 +53,7 @@ class RetosViewModel(
 
         viewModelScope.launch {
             if (retoRepository.existsByDescription(normalizedDescription)) {
-                _addRetoError.postValue("Ya existe un reto con ese texto")
+                _addRetoError.postValue(R.string.reto_duplicate_error)
                 return@launch
             }
 
@@ -73,7 +74,7 @@ class RetosViewModel(
 
         viewModelScope.launch {
             if (retoRepository.existsByDescriptionExceptId(normalizedDescription, reto.id)) {
-                _editRetoError.postValue("Ya existe un reto con ese texto")
+                _editRetoError.postValue(R.string.reto_duplicate_error)
                 return@launch
             }
 
