@@ -13,17 +13,17 @@
     android:paddingBottom="24dp">
 
     <TextView
-        android:id="@+id/txtEditTitle"
+        android:id="@+id/txtAddTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/edit_reto_title"
+        android:text="@string/add_reto_title"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputLayoutEditReto"
+        android:id="@+id/inputLayoutAddReto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
@@ -31,12 +31,13 @@
         app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtEditReto"
+            android:id="@+id/edtAddReto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textCapSentences|textMultiLine"
             android:background="@drawable/bg_reto_input"
             android:gravity="start|center_vertical"
+            android:hint="@string/reto_input_hint"
             android:maxLines="4"
             android:minHeight="48dp"
             android:paddingStart="0dp"
@@ -44,10 +45,12 @@
             android:paddingEnd="0dp"
             android:paddingBottom="10dp"
             android:textColor="@color/black"
+            android:textColorHint="@color/hint_gray"
             android:textCursorDrawable="@null"
             android:textSize="15sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,7 +59,7 @@
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCancelEditReto"
+            android:id="@+id/btnCancelAddReto"
             android:layout_width="110dp"
             android:layout_height="42dp"
             android:fontFamily="sans-serif-medium"
@@ -78,7 +81,7 @@
             app:cornerRadius="6dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSaveEditReto"
+            android:id="@+id/btnSaveAddReto"
             android:layout_width="110dp"
             android:layout_height="42dp"
             android:layout_marginStart="36dp"
@@ -98,8 +101,9 @@
             android:textSize="13sp"
             android:textStyle="bold"
             app:iconPadding="0dp"
-            app:backgroundTint="@color/orange"
+            app:backgroundTint="@color/button_disabled"
             app:cornerRadius="6dp" />
 
     </LinearLayout>
+
 </LinearLayout>

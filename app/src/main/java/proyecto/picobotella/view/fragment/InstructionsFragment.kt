@@ -1,4 +1,4 @@
-package proyecto.picobotella.ui.instructions
+package proyecto.picobotella.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +18,6 @@ class InstructionsFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_instructions, container, false)
 
-        //Volver al home
         val btnBack = view.findViewById<ImageButton>(R.id.btnBack)
         btnBack.setOnClickListener {
             findNavController().popBackStack()

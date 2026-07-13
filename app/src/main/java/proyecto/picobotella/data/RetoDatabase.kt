@@ -1,9 +1,11 @@
-package proyecto.picobotella.data.local
+package proyecto.picobotella.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import proyecto.picobotella.model.RetoEntity
+import proyecto.picobotella.utils.Constants
 
 @Database(entities = [RetoEntity::class], version = 1, exportSchema = false)
 abstract class RetoDatabase : RoomDatabase() {
@@ -19,7 +21,7 @@ abstract class RetoDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     RetoDatabase::class.java,
-                    "reto_database"
+                    Constants.NAME_BD
                 ).build()
                 INSTANCE = instance
                 instance

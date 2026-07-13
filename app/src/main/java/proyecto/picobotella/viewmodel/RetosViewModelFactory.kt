@@ -1,9 +1,9 @@
-package proyecto.picobotella.ui.retos
+package proyecto.picobotella.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import proyecto.picobotella.data.repository.RetoRepository
-import proyecto.picobotella.data.repository.AudioRepository
+import proyecto.picobotella.repository.AudioRepository
+import proyecto.picobotella.repository.RetoRepository
 
 class RetosViewModelFactory(
     private val retoRepository: RetoRepository,

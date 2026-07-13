@@ -1,4 +1,4 @@
-package proyecto.picobotella.ui.splash
+package proyecto.picobotella.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

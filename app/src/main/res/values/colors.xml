@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="dark_gray">#FF414141</color>
     <color name="orange">#FF6B00</color>
+    <color name="hint_gray">#FFAFAFAF</color>
+    <color name="button_disabled">#FFD9D9D9</color>
 </resources>

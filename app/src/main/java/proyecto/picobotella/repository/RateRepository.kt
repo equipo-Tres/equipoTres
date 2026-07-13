@@ -1,4 +1,4 @@
-package proyecto.picobotella.data.repository
+package proyecto.picobotella.repository
 
 import android.content.Context
 import android.content.Intent
