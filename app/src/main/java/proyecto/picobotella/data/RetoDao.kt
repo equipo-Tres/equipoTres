@@ -15,9 +15,6 @@ interface RetoDao {
     @Query("SELECT * FROM retos ORDER BY id DESC")
     fun getAll(): LiveData<List<RetoEntity>>
 
-    @Query("SELECT COUNT(*) FROM retos")
-    suspend fun getCount(): Int
-
     @Query("SELECT EXISTS(SELECT 1 FROM retos WHERE LOWER(TRIM(description)) = LOWER(TRIM(:description)))")
     suspend fun existsByDescription(description: String): Boolean
 

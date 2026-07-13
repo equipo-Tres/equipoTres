@@ -40,10 +40,5 @@
     <string name="dialog_si">SÍ</string>
     <string name="dialog_reto_title">¡Reto!</string>
     <string name="dialog_reto_close">Cerrar</string>
-
-    <string name="sample_reto_1">Baila durante 30 segundos</string>
-    <string name="sample_reto_2">Imita a un animal</string>
-    <string name="sample_reto_3">Canta el coro de tu canción favorita</string>
-    <string name="sample_reto_4">Di un chiste en voz alta</string>
-    <string name="sample_reto_5">Haz 10 sentadillas</string>
+    <string name="reto_duplicate_error">Ya existe un reto con ese texto</string>
 </resources>

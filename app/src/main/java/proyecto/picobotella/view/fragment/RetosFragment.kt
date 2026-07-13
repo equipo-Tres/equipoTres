@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -163,12 +162,12 @@ class RetosFragment : Fragment() {
         }
     }
 
-    private fun renderAddRetoError(error: String?) {
-        addRetoInputLayout?.error = error
+    private fun renderAddRetoError(errorResId: Int?) {
+        addRetoInputLayout?.error = errorResId?.let { getString(it) }
     }
 
-    private fun renderEditRetoError(error: String?) {
-        editRetoInputLayout?.error = error
+    private fun renderEditRetoError(errorResId: Int?) {
+        editRetoInputLayout?.error = errorResId?.let { getString(it) }
     }
 
     private fun showDeleteRetoDialog(reto: RetoEntity) {
@@ -204,7 +203,6 @@ class RetosFragment : Fragment() {
 
         val btnBack = view.findViewById<ImageButton>(R.id.btnBack)
         btnBack.setOnClickListener {
-            viewModel.onRetosHidden()
             findNavController().popBackStack()
         }
 
@@ -259,6 +257,15 @@ class RetosFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.onRetosVisible()
+        if (!requireActivity().isChangingConfigurations) {
+            viewModel.onRetosVisible()
+        }
+    }
+
+    override fun onPause() {
+        if (!requireActivity().isChangingConfigurations) {
+            viewModel.onRetosHidden()
+        }
+        super.onPause()
     }
 }
