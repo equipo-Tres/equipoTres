@@ -10,6 +10,12 @@ class RetoRepository(private val retoDao: RetoDao) {
 
     val allRetos: LiveData<List<RetoEntity>> = retoDao.getAll()
 
+    suspend fun getRandomRetoDescription(): String? {
+        return withContext(Dispatchers.IO) {
+            retoDao.getRandom()?.description
+        }
+    }
+
     suspend fun existsByDescription(description: String): Boolean {
         return withContext(Dispatchers.IO) {
             retoDao.existsByDescription(description)

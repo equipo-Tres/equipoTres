@@ -40,5 +40,6 @@
     <string name="dialog_si">SÍ</string>
     <string name="dialog_reto_title">¡Reto!</string>
     <string name="dialog_reto_close">Cerrar</string>
+    <string name="reto_random_empty">No hay retos disponibles</string>
     <string name="reto_duplicate_error">Ya existe un reto con ese texto</string>
 </resources>
