@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.imageview.ShapeableImageView
 import proyecto.picobotella.PicoBotellaApplication
@@ -33,7 +34,13 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels {
         val app = requireActivity().application as PicoBotellaApplication
-        HomeViewModelFactory(app.rateRepository, app.audioRepository, app.spinSoundRepository, app.pokemonRepository)
+        HomeViewModelFactory(
+            app.rateRepository,
+            app.audioRepository,
+            app.spinSoundRepository,
+            app.pokemonRepository,
+            app.retoRepository
+        )
     }
 
     override fun onResume() {
@@ -199,6 +206,12 @@ class HomeFragment : Fragment() {
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_reto_aleatorio, null)
         val imgPokemon = dialogView.findViewById<ShapeableImageView>(R.id.imgPokemon)
+        val txtRetoDescription = dialogView.findViewById<TextView>(R.id.txtRetoDescription)
+        val btnClose = dialogView.findViewById<MaterialButton>(R.id.btnCloseRetoDialog)
+
+        txtRetoDescription.text = viewModel.randomRetoDescription.value
+            ?.takeIf { it.isNotBlank() }
+            ?: getString(R.string.reto_random_empty)
 
         viewModel.pokemonImageUrl.value?.let { url ->
             Glide.with(this)
@@ -208,17 +221,21 @@ class HomeFragment : Fragment() {
 
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setView(dialogView)
-            .setCancelable(true)
+            .setCancelable(false)
             .create()
 
         retoDialog = dialog
+
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
 
         dialog.setOnDismissListener {
             retoDialog = null
             viewModel.onRetoDialogClosed()
         }
 
-        dialog.setCanceledOnTouchOutside(true)
+        dialog.setCanceledOnTouchOutside(false)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }

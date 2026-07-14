@@ -15,6 +15,9 @@ interface RetoDao {
     @Query("SELECT * FROM retos ORDER BY id DESC")
     fun getAll(): LiveData<List<RetoEntity>>
 
+    @Query("SELECT * FROM retos ORDER BY RANDOM() LIMIT 1")
+    suspend fun getRandom(): RetoEntity?
+
     @Query("SELECT EXISTS(SELECT 1 FROM retos WHERE LOWER(TRIM(description)) = LOWER(TRIM(:description)))")
     suspend fun existsByDescription(description: String): Boolean
 

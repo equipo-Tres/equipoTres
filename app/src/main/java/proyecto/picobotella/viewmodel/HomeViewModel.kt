@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import proyecto.picobotella.repository.AudioRepository
 import proyecto.picobotella.repository.PokemonRepository
 import proyecto.picobotella.repository.RateRepository
+import proyecto.picobotella.repository.RetoRepository
 import proyecto.picobotella.repository.SpinSoundRepository
 import proyecto.picobotella.utils.Constants
 
@@ -24,7 +25,8 @@ class HomeViewModel(
     private val rateRepository: RateRepository,
     private val audioRepository: AudioRepository,
     private val spinSoundRepository: SpinSoundRepository,
-    private val pokemonRepository: PokemonRepository
+    private val pokemonRepository: PokemonRepository,
+    private val retoRepository: RetoRepository
 ) : ViewModel() {
 
     private val _isMusicEnabled = MutableLiveData(audioRepository.isMusicEnabled())
@@ -62,6 +64,9 @@ class HomeViewModel(
 
     private val _pokemonImageUrl = MutableLiveData<String?>()
     val pokemonImageUrl: LiveData<String?> = _pokemonImageUrl
+
+    private val _randomRetoDescription = MutableLiveData<String?>()
+    val randomRetoDescription: LiveData<String?> = _randomRetoDescription
 
     private var accumulatedRotation: Float = 0f
     private var spinStartedAt: Long = 0L
@@ -115,6 +120,7 @@ class HomeViewModel(
             }
 
             _pokemonImageUrl.value = pokemonRepository.getRandomPokemonImageUrl()
+            _randomRetoDescription.value = retoRepository.getRandomRetoDescription()?.trim()
             onCountdownFinished()
         }
     }
