@@ -28,7 +28,7 @@
             android:focusable="true"
             android:foreground="?attr/selectableItemBackgroundBorderless"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_arrow_back" />
+            android:src="@drawable/ic_arrow_back" />
 
         <TextView
             android:layout_width="0dp"
@@ -36,7 +36,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/retos_title"
-            android:textColor="#FF6B00"
+            android:textColor="@color/orange"
             android:textSize="20sp"
             android:textStyle="bold" />
 

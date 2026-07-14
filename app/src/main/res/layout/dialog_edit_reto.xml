@@ -37,6 +37,7 @@
             android:inputType="textCapSentences|textMultiLine"
             android:background="@drawable/bg_reto_input"
             android:gravity="start|center_vertical"
+            android:hint="@string/reto_input_hint"
             android:maxLines="4"
             android:minHeight="48dp"
             android:paddingStart="0dp"
@@ -44,6 +45,7 @@
             android:paddingEnd="0dp"
             android:paddingBottom="10dp"
             android:textColor="@color/black"
+            android:textColorHint="@color/hint_gray"
             android:textCursorDrawable="@null"
             android:textSize="15sp" />
 
