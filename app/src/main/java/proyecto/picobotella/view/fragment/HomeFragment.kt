@@ -31,6 +31,7 @@ import proyecto.picobotella.viewmodel.HomeViewModelFactory
 class HomeFragment : Fragment() {
 
     private var retoDialog: Dialog? = null
+    private var bottleSpinAnimator: ObjectAnimator? = null
 
     private val viewModel: HomeViewModel by viewModels {
         val app = requireActivity().application as PicoBotellaApplication
@@ -53,6 +54,12 @@ class HomeFragment : Fragment() {
             viewModel.onHomeHidden()
         }
         super.onPause()
+    }
+
+    override fun onDestroyView() {
+        bottleSpinAnimator?.cancel()
+        bottleSpinAnimator = null
+        super.onDestroyView()
     }
 
     override fun onCreateView(
@@ -78,8 +85,6 @@ class HomeFragment : Fragment() {
             requireContext(),
             R.anim.button_pulse
         )
-
-        var bottleSpinAnimator: ObjectAnimator? = null
 
         btnSpin.startAnimation(pulseAnimation)
 

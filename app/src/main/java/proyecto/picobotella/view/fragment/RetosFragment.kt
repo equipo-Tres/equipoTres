@@ -37,7 +37,7 @@ class RetosFragment : Fragment() {
 
     private val viewModel: RetosViewModel by viewModels {
         val app = requireActivity().application as PicoBotellaApplication
-        RetosViewModelFactory(app.retoRepository, app.audioRepository)
+        RetosViewModelFactory(app.retoRepository)
     }
 
     private val adapter = RetoAdapter(
@@ -189,6 +189,7 @@ class RetosFragment : Fragment() {
             dialog.dismiss()
         }
 
+        dialog.setCanceledOnTouchOutside(false)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }
@@ -253,19 +254,5 @@ class RetosFragment : Fragment() {
         }
 
         return view
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (!requireActivity().isChangingConfigurations) {
-            viewModel.onRetosVisible()
-        }
-    }
-
-    override fun onPause() {
-        if (!requireActivity().isChangingConfigurations) {
-            viewModel.onRetosHidden()
-        }
-        super.onPause()
     }
 }

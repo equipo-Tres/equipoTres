@@ -21,19 +21,15 @@ class RetoViewHolder(
         val btnDelete = itemView.findViewById<ImageButton>(R.id.btnDeleteReto)
 
         btnEdit.setOnClickListener { view ->
-            playTouchAnimation(view) {
+            TouchAnimation.play(view) {
                 onEditClick(reto)
             }
         }
 
         btnDelete.setOnClickListener { view ->
-            playTouchAnimation(view) {
+            TouchAnimation.play(view) {
                 onDeleteClick(reto)
             }
         }
-    }
-
-    private fun playTouchAnimation(view: View, onComplete: () -> Unit) {
-        TouchAnimation.play(view, onComplete)
     }
 }
